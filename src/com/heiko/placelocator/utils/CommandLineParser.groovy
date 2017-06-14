@@ -2,9 +2,6 @@ package com.heiko.placelocator.utils
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
 
-/**
- * This is an util class
- */
 class CommandLineParser {
 
     /**
@@ -16,11 +13,12 @@ class CommandLineParser {
      * @throws GoogleAPILocatorException if command line arguments are incorrect
      */
     static void parse(String[] args, ConfigObject config) {
-        def cli = new CliBuilder(usage: 'locator.groovy -[fhkr] [longitude] [latitude]')
+        def cli = new CliBuilder(usage: 'locator.groovy -[dfhkr] [latitude] [longitude]')
 
         // Create the list of options.
         cli.with {
             h longOpt: 'help', 'Show usage information'
+            d longOpt: 'do-not-filter-by-types'
             f longOpt: 'format', args: 1, argName: 'format', 'Response format can be "json" or "xml"'
             k longOpt: 'key', args: 1, argName: 'key', 'Use the authorization key'
             r longOpt: 'radius', args: 1, argName: 'radius', 'Use the radius'
@@ -35,6 +33,10 @@ class CommandLineParser {
         if (options.h) {
             cli.usage()
             return
+        }
+
+        if (options.d) {
+            config.doNotFilterByTypes = true
         }
 
         if (options.f) {
@@ -52,28 +54,27 @@ class CommandLineParser {
                 throw new GoogleAPILocatorException('Incorrect command line arguments. ' +
                         'Radius must be an integer')
             } finally {
-                if (config.radius < 1) {
+                if (config.radius < 10) {
                     throw new GoogleAPILocatorException('Incorrect command line arguments. ' +
-                            'Radius must be greater than 0')
+                            'Radius must be greater than 10')
                 }
             }
         }
 
         // Handle all non-option arguments.
         def extraArguments = options.arguments()
-
         if (extraArguments.size() == 2) {
             try {
-                config.longitude = Double.parseDouble(extraArguments[0])
-                config.latitude = Double.parseDouble(extraArguments[1])
+                config.latitude = Double.parseDouble(extraArguments[0])
+                config.longitude = Double.parseDouble(extraArguments[1])
             } catch (NumberFormatException e) {
-                throw new GoogleAPILocatorException('Incorrect command line arguments. [longitude] and ' +
-                        '[latitude] must be a double number')
+                throw new GoogleAPILocatorException('Incorrect command line arguments. ' +
+                        '[latitude] and [longitude] must be double numbers')
             }
 
         } else {
             throw new GoogleAPILocatorException('Incorrect command line arguments. ' +
-                    '[longitude] and [latitude] are obligatory')
+                    '[latitude] and [longitude] are obligatory')
         }
     }
 }

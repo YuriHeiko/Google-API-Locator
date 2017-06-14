@@ -27,7 +27,7 @@ import static com.heiko.placelocator.utils.Looper.loop
  */
 
 String result = ''
-Map JSON
+Map JSON = [status:"ERROR"]
 
 try {
 
@@ -69,7 +69,9 @@ try {
     return result
 
 } catch (GoogleAPILocatorException e) {
-    // TODO: JSON can be empty!
     JSON.put('LocatorAPI error message', e.getMessage())
+
+    println JSON
+
     return JSON
 }

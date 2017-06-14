@@ -1,8 +1,5 @@
 package com.heiko.placelocator.utils
 
-/**
- * This is an util class
- */
 class URLBuilder {
 
     /**

@@ -1,7 +1,6 @@
 package com.heiko.placelocator.utils
 
 /**
- * This is an util class
  * Adds kinda do/while cycle into the groovy language
  */
 class Looper {

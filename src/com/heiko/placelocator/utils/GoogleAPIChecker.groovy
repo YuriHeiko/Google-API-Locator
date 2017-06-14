@@ -5,9 +5,6 @@ import com.heiko.placelocator.exceptions.InvalidRequestException
 import com.heiko.placelocator.exceptions.OverQueryLimitException
 import com.heiko.placelocator.exceptions.RequestDeniedException
 
-/**
- * This is an util class
- */
 class GoogleAPIChecker {
 
     /**
