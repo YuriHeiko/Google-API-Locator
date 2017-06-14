@@ -1,4 +1,4 @@
-package com.heiko.placelocator.google
+package com.heiko.placelocator.location
 
 class Place {
     Map<String, Double> location

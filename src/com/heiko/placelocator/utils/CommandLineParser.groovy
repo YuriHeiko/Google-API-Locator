@@ -20,7 +20,7 @@ class CommandLineParser {
             h longOpt: 'help', 'Show usage information'
             d longOpt: 'do-not-filter-by-types', 'Turn off filtering by types'
             f longOpt: 'format', args: 1, argName: 'format', 'Response format can be "json" or "xml"'
-            k longOpt: 'key', args: 1, argName: 'key', 'Use the authorization key'
+//            k longOpt: 'key', args: 1, argName: 'key', 'Use the authorization key'
             r longOpt: 'radius', args: 1, argName: 'radius', 'Use the radius'
         }
 
@@ -48,6 +48,7 @@ class CommandLineParser {
             config.authorizationKey = options.key
         }
 
+/*
         if (options.r) {
             try {
                 config.radius = Integer.parseInt(options.radius)
@@ -61,6 +62,7 @@ class CommandLineParser {
                 }
             }
         }
+*/
 
         // Handle all non-option arguments.
         def extraArguments = options.arguments()

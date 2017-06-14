@@ -1,6 +1,6 @@
 package com.heiko.placelocator.search.simplesearch
 
-import com.heiko.placelocator.google.Place
+import com.heiko.placelocator.location.Place
 
 class PlacesComparator implements Comparator<Place> {
 

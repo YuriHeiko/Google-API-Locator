@@ -5,6 +5,7 @@ mainUrl = 'https://maps.googleapis.com/maps/api/place/'
 authorizationKey = 'AIzaSyBCdeSMg1PnVaAOaEVrB_GIog-q6fs27Fw'
 method = 'nearbysearch'
 format = 'json'
+radius = 14
 
 // initial
 HTTPClient = 'simple'

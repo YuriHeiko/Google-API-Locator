@@ -1,7 +1,7 @@
 package com.heiko.placelocator
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
-import com.heiko.placelocator.google.Places
+import com.heiko.placelocator.location.Places
 import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.HTTPClientBuilder
 import com.heiko.placelocator.http.URLBuilder
@@ -11,7 +11,7 @@ import com.heiko.placelocator.search.PlaceSearcherBuilder
 import com.heiko.placelocator.utils.CommandLineParser
 import com.heiko.placelocator.utils.ConfigReader
 
-import static com.heiko.placelocator.google.GoogleAPIChecker.isResponseOK
+import static com.heiko.placelocator.utils.GoogleAPIChecker.isResponseOK
 import static com.heiko.placelocator.utils.Looper.loop
 
 // TODO: find the fringe test cases
@@ -44,7 +44,7 @@ try {
     // Get PlaceSearcher
     final PlaceSearcher placeSearcher = new PlaceSearcherBuilder().get(config)
 
-    // a kind of do-while cycle
+    // a kind of a do-while cycle
     loop {
         // Build and return an appropriate url according to configuration parameters
         final String url = new URLBuilder().getURL(config)

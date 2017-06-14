@@ -1,6 +1,6 @@
-package com.heiko.placelocator.google
+package com.heiko.placelocator.location
 
-import static com.heiko.placelocator.google.CalculateDistance.calculate
+import static com.heiko.placelocator.location.CalculateDistance.calculate
 
 class Places {
     final List<Place> places

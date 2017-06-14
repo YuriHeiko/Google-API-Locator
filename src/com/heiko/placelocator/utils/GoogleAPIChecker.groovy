@@ -1,4 +1,4 @@
-package com.heiko.placelocator.google
+package com.heiko.placelocator.utils
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
 import com.heiko.placelocator.exceptions.InvalidRequestException

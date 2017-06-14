@@ -7,4 +7,5 @@ interface PlaceSearcher {
     boolean isResultAchieved()
 
     boolean changeSearch(final ConfigObject config)
+
 }
