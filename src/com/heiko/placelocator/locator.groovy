@@ -5,9 +5,9 @@ import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.HTTPClientBuilder
 import com.heiko.placelocator.parser.ParserBuilder
 import com.heiko.placelocator.search.PlaceSearcher
+import com.heiko.placelocator.search.PlaceSearcherBuilder
 import com.heiko.placelocator.utils.CommandLineParser
 import com.heiko.placelocator.utils.ConfigReader
-import com.heiko.placelocator.search.PlaceSearcherBuilder
 import com.heiko.placelocator.utils.URLBuilder
 
 import static com.heiko.placelocator.utils.GoogleAPIChecker.isResponseOK

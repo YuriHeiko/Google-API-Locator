@@ -1,5 +1,6 @@
 package com.heiko.placelocator.search
 
+import com.heiko.placelocator.exceptions.GoogleAPILocatorException
 import com.heiko.placelocator.search.simplesearch.SimplePlaceSearcher
 
 /**
@@ -11,16 +12,16 @@ class PlaceSearcherBuilder {
      * Creates the default search algorithm implementation
      *
      * @param config {@code ConfigObject} with configuration parameters
-     * @return {@code PlaceSearcher} object
+     * @return {@link PlaceSearcher} object
+     * @throws GoogleAPILocatorException if a chosen search algorithm isn't implemented
      */
     PlaceSearcher get(ConfigObject config) {
-        PlaceSearcher placeSearcher
+        final PlaceSearcher placeSearcher
 
-        switch (config.PlaceSearcher) {
-
-            case "Simple":
-            default:
-                placeSearcher = new SimplePlaceSearcher()
+        if (config.PlaceSearcher == 'simple') {
+            placeSearcher = new SimplePlaceSearcher()
+        } else {
+            throw new GoogleAPILocatorException("The script doesn't have such a search algorithm implementation ($config.PlaceSearcher)")
         }
 
         return placeSearcher

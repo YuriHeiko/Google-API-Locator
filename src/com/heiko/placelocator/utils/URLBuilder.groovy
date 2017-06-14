@@ -6,7 +6,7 @@ package com.heiko.placelocator.utils
 class URLBuilder {
 
     /**
-     * This function builds a request url to Google Places Web API according to configuration parameters
+     * Builds a request url to Google Places Web API according to configuration parameters
      *
      * @param config {@code ConfigObject} with configuration parameters
      * @return {@code String} contains a request url

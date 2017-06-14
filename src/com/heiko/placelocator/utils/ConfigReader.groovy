@@ -1,33 +1,35 @@
 package com.heiko.placelocator.utils
+
 /**
- * This class uses a {@code ConfigSlurper} class to reads property file (groovy script)
+ * Uses a {@code ConfigSlurper} class to reads property file (groovy script)
  * and returns a {@code ConfigObject} instance.
  */
 class ConfigReader {
 
+    final static String DEFAULT_FILE_NAME = 'Properties.groovy'
+
     /**
-     * This is an overloaded function that reads properties from the default groovy script file
+     * Reads properties from the default groovy script file.
      *
      * @return The ConfigObject instance
      */
     static Map read() {
-        File defaultFile = new File('Properties.groovy')
-        read(defaultFile)
+        read(new File(DEFAULT_FILE_NAME))
     }
 
     /**
-     * This function reads properties from a specified url and fills the property map
+     * Reads properties from a specified url and fills the property map.
+     * Uses {@code ConfigSlurper} class.
      *
      * @param location The original location of the Script as a URL
      * @return The ConfigObject instance
      */
     static Map read(URL location) {
-        ConfigSlurper slurper = new ConfigSlurper()
-        slurper.parse(location)
+        new ConfigSlurper().parse(location)
     }
 
     /**
-     * This is an overloaded function that reads properties from the specified groovy script file
+     * Reads properties from the specified groovy script file.
      *
      * @return The ConfigObject instance
      */

@@ -7,5 +7,5 @@ method = 'nearbysearch'
 format = 'json'
 
 // initial
-HTTPClient = "Simple"
-PlaceSearcher = "Simple"
+HTTPClient = 'simple'
+PlaceSearcher = 'simple'

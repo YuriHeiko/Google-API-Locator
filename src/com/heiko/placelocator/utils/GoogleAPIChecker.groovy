@@ -11,7 +11,8 @@ import com.heiko.placelocator.exceptions.RequestDeniedException
 class GoogleAPIChecker {
 
     /**
-     * This class checks Google Places API response status
+     * Checks Google Places API response status
+     *
      * @param response {@code Map} that contains parsed JSON response
      * @return true if status is 'OK' or 'ZERO_RESULTS', throws an exception otherwise
      * @throws OverQueryLimitException if query limit is exceeded

@@ -8,7 +8,7 @@ import com.heiko.placelocator.exceptions.GoogleAPILocatorException
 class CommandLineParser {
 
     /**
-     * This function uses {@code CliBuilder} class in order to parse command line arguments
+     * Uses {@code CliBuilder} class in order to parse command line arguments
      * and put them into a config file
      *
      * @param args command line arguments
