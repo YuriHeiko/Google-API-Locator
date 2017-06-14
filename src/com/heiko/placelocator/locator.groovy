@@ -29,6 +29,8 @@ import com.heiko.placelocator.search.SearcherIterator
 String result = /[status: "ERROR"]/ // default response
 Locations locations = new Locations()
 
+return
+
 try {
     // Read the initial configuration from the default configuration file, parse
     // command line arguments and put them into the initial configuration object

@@ -10,8 +10,8 @@ urlOptions = [key: 'AIzaSyBCdeSMg1PnVaAOaEVrB_GIog-q6fs27Fw', radius: 14]
 
 // initial
 HTTPClient = 'simple'
-//PlaceSearcher = 'simple'
 placeSearcher = 'new'
+rate = 6
 
 // filter
 doNotFilterByTypes = false

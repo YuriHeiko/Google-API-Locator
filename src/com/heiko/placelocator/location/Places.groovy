@@ -3,7 +3,7 @@ package com.heiko.placelocator.location
 import static com.heiko.placelocator.location.CalculateDistance.calculate
 
 class Places {
-    final List<Place> places
+    private final List<Place> places
 
     Places(List places, List<String> excludedTypes, double initialLat, double initialLng) {
 
@@ -19,5 +19,9 @@ class Places {
                 this.places.add(new Place(location, e.name, e.place_id, e.types, e.vicinity))
             }
         }
+    }
+
+    int getSize() {
+        return places.size()
     }
 }
