@@ -2,10 +2,13 @@ package com.heiko.placelocator
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
 import com.heiko.placelocator.http.HTTPClient
-import com.heiko.placelocator.http.HTTPClientController
-import com.heiko.placelocator.parser.ResponseParserController
+import com.heiko.placelocator.http.HTTPClientBuilder
+import com.heiko.placelocator.parser.ParserBuilder
 import com.heiko.placelocator.search.PlaceSearcher
-import com.heiko.placelocator.utils.*
+import com.heiko.placelocator.utils.CommandLineParser
+import com.heiko.placelocator.utils.ConfigReader
+import com.heiko.placelocator.search.PlaceSearcherBuilder
+import com.heiko.placelocator.utils.URLBuilder
 
 import static com.heiko.placelocator.utils.GoogleAPIChecker.isResponseOK
 import static com.heiko.placelocator.utils.Looper.loop
@@ -35,13 +38,13 @@ try {
     CommandLineParser.parse(args, config)
 
     // Get parser according to configuration parameters
-    final responseParser = ParserBuilder.get(config)
+    final responseParser = new ParserBuilder().get(config)
 
     // Get HTTPClient
-    final HTTPClient httpClient = HTTPClientBuilder.get(config)
+    final HTTPClient httpClient = new HTTPClientBuilder().get(config)
 
     // Get PlaceSearcher
-    final PlaceSearcher placeSearcher = PlaceSearcherBuilder.get(config)
+    final PlaceSearcher placeSearcher = new PlaceSearcherBuilder().get(config)
 
     // a kind of do-while cycle
     loop {
@@ -49,10 +52,10 @@ try {
         final String url = new URLBuilder().getURL(config)
 
         // Send request and obtain result by the specified url
-        final String response = new HTTPClientController(httpClient).get(url)
+        final String response = httpClient.get(url)
 
         // Parse the obtained result into Map
-        JSON = new ResponseParserController(responseParser).parse response
+        JSON = responseParser.parse response
 
         // if a valid response was gotten
         if (isResponseOK(JSON)) {

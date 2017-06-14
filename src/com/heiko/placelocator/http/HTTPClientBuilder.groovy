@@ -1,7 +1,4 @@
-package com.heiko.placelocator.utils
-
-import com.heiko.placelocator.http.HTTPClient
-import com.heiko.placelocator.http.SimpleHTTPClient
+package com.heiko.placelocator.http
 
 /**
  * This is an util class
@@ -15,14 +12,15 @@ class HTTPClientBuilder {
      * @param config {@code ConfigObject} with configuration parameters
      * @return a HTTPClient object
      */
-    static HTTPClient get(ConfigObject config) {
-        final HTTPClient httpClient
+    HTTPClient get(ConfigObject config) {
+
+        HTTPClient httpClient
 
         switch (config.HTTPClient) {
+
             case "Simple":
             default:
                 httpClient = new SimpleHTTPClient()
-                break
         }
 
         return httpClient
