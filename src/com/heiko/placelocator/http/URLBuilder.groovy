@@ -1,4 +1,4 @@
-package com.heiko.placelocator.utils
+package com.heiko.placelocator.http
 
 class URLBuilder {
 

@@ -12,13 +12,13 @@ class CommandLineParser {
      * @param config script's {@code ConfigObject}
      * @throws GoogleAPILocatorException if command line arguments are incorrect
      */
-    static void parse(String[] args, ConfigObject config) {
+    static ConfigObject parse(String[] args, ConfigObject config) {
         def cli = new CliBuilder(usage: 'locator.groovy -[dfhkr] [latitude] [longitude]')
 
         // Create the list of options.
         cli.with {
             h longOpt: 'help', 'Show usage information'
-            d longOpt: 'do-not-filter-by-types'
+            d longOpt: 'do-not-filter-by-types', 'Turn off filtering by types'
             f longOpt: 'format', args: 1, argName: 'format', 'Response format can be "json" or "xml"'
             k longOpt: 'key', args: 1, argName: 'key', 'Use the authorization key'
             r longOpt: 'radius', args: 1, argName: 'radius', 'Use the radius'
@@ -36,7 +36,8 @@ class CommandLineParser {
         }
 
         if (options.d) {
-            config.doNotFilterByTypes = true
+            if (config.types)
+                config.excludedTypes = new ArrayList<>()
         }
 
         if (options.f) {
@@ -76,5 +77,7 @@ class CommandLineParser {
             throw new GoogleAPILocatorException('Incorrect command line arguments. ' +
                     '[latitude] and [longitude] are obligatory')
         }
+
+        return config
     }
 }

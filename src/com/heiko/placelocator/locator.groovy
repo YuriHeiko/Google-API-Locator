@@ -1,16 +1,17 @@
 package com.heiko.placelocator
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
+import com.heiko.placelocator.google.Places
 import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.HTTPClientBuilder
+import com.heiko.placelocator.http.URLBuilder
 import com.heiko.placelocator.parser.ParserBuilder
 import com.heiko.placelocator.search.PlaceSearcher
 import com.heiko.placelocator.search.PlaceSearcherBuilder
 import com.heiko.placelocator.utils.CommandLineParser
 import com.heiko.placelocator.utils.ConfigReader
-import com.heiko.placelocator.utils.URLBuilder
 
-import static com.heiko.placelocator.utils.GoogleAPIChecker.isResponseOK
+import static com.heiko.placelocator.google.GoogleAPIChecker.isResponseOK
 import static com.heiko.placelocator.utils.Looper.loop
 
 // TODO: find the fringe test cases
@@ -20,22 +21,19 @@ import static com.heiko.placelocator.utils.Looper.loop
 // TODO: convert incoming coordinates from another format
 
 /**
- * This script uses Google Places Web API to find a nearest possible location
+ * Uses Google Places Web API to find a nearest possible location
  * by GPS coordinates.
+ *
  * @args command line arguments
  * @return nearest possible places ranged from 1 to 5
  */
 
-String result = ''
-Map JSON = [status:"ERROR"]
+Map result = [status: "ERROR"] // default response
 
 try {
-
-    // Read initial config from default configuration file
-    ConfigObject config = ConfigReader.read()
-
-    // Parse the command line attributes and put them into configuration parameters
-    CommandLineParser.parse(args, config)
+    // Read the initial configuration from the default configuration file, parse
+    // command line arguments and put them into the initial configuration object
+    final ConfigObject config = CommandLineParser.parse(args, ConfigReader.read())
 
     // Get parser according to configuration parameters
     final responseParser = new ParserBuilder().get(config)
@@ -55,12 +53,19 @@ try {
         final String response = httpClient.get(url)
 
         // Parse the obtained result into Map
-        JSON = responseParser.parse response
+        Map parsedResponse = responseParser.parse(response) as Map
 
         // if a valid response was gotten
-        if (isResponseOK(JSON)) {
+        if (isResponseOK(parsedResponse.status as String)) {
+
+            Places places = new Places(
+                    parsedResponse.results as List,
+                    config.excludedTypes as List,
+                    config.latitude as double,
+                    config.lonitude as double)
+
             // try to find the closest place
-            result = placeSearcher.find(JSON.results, config)
+            result = placeSearcher.find(parsedResponse.results as List, config) as Map
         }
     } until { placeSearcher.isResultAchieved() || placeSearcher.changeSearch(config) }
 
@@ -69,9 +74,9 @@ try {
     return result
 
 } catch (GoogleAPILocatorException e) {
-    JSON.put('LocatorAPI error message', e.getMessage())
+    result.put('LocatorAPI error message', e.getMessage())
 
-    println JSON
+    println result
 
-    return JSON
+    return result
 }

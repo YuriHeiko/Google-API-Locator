@@ -1,5 +1,6 @@
 package com.heiko.placelocator.search.simplesearch
 
+import com.heiko.placelocator.google.CalculateDistance
 import com.heiko.placelocator.search.PlaceSearcher
 
 class SimplePlaceSearcher implements PlaceSearcher {

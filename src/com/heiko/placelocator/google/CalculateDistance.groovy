@@ -1,4 +1,4 @@
-package com.heiko.placelocator.search.simplesearch
+package com.heiko.placelocator.google
 
 class CalculateDistance {
 
@@ -11,7 +11,7 @@ class CalculateDistance {
  * el2 End altitude in meters
  * @returns Distance in Meters
  */
-    static int calculate(double lat1, double lon1, double lat2, double lon2, double el1 = 0, double el2 = 0) {
+    static double calculate(double lat1, double lon1, double lat2, double lon2, double el1 = 0, double el2 = 0) {
 
         final int R = 6371 // Radius of the earth
 
@@ -27,6 +27,6 @@ class CalculateDistance {
 
         distance = Math.pow(distance, 2) + Math.pow(height, 2)
 
-        return (int) Math.sqrt(distance)
+        return Math.sqrt(distance)
     }
 }
