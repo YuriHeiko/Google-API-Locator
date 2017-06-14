@@ -5,16 +5,18 @@ import static com.heiko.placelocator.location.CalculateDistance.calculate
 class Places {
     final List<Place> places
 
-    Places(List<Place> places, List<String> excludedTypes, double initialLat, double initialLong) {
+    Places(List places, List<String> excludedTypes, double initialLat, double initialLng) {
 
         this.places = new ArrayList<>()
 
         places.each { e ->
             if (e.types.size() == (e.types - excludedTypes).size()) {
 
-                e.location.put('distance', calculate(initialLat, initialLong, e.location.latitude, e.location.longitude))
+                def location = e.geometry.location
 
-                this.places.add(new Place(e.location, e.name, e.place_id, e.types, e.vicinity))
+                location.put('distance', calculate(initialLat, initialLng, location.lat, location.lng))
+
+                this.places.add(new Place(location, e.name, e.place_id, e.types, e.vicinity))
             }
         }
     }

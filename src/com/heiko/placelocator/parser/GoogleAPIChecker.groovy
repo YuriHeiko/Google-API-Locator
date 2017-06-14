@@ -1,34 +1,30 @@
-package com.heiko.placelocator.utils
+package com.heiko.placelocator.parser
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
 import com.heiko.placelocator.exceptions.InvalidRequestException
 import com.heiko.placelocator.exceptions.OverQueryLimitException
 import com.heiko.placelocator.exceptions.RequestDeniedException
 
-class GoogleAPIChecker {
+trait GoogleAPIChecker {
 
     /**
      * Checks Google Places API response status
      *
      * @param response {@code Map} that contains parsed JSON response
      * @return true if status is 'OK' or 'ZERO_RESULTS', throws an exception otherwise
-     * @throws OverQueryLimitException if query limit is exceeded
-     * @throws RequestDeniedException if Google API denies a request
-     * @throws InvalidRequestException if a request has invalid format
-     * @throws GoogleAPILocatorException if The Google Places API probably changes
+     * @throws com.heiko.placelocator.exceptions.OverQueryLimitException if query limit is exceeded
+     * @throws com.heiko.placelocator.exceptions.RequestDeniedException if Google API denies a request
+     * @throws com.heiko.placelocator.exceptions.InvalidRequestException if a request has invalid format
+     * @throws com.heiko.placelocator.exceptions.GoogleAPILocatorException if The Google Places API probably changes
      */
-    static boolean isResponseOK(final String responseStatus) {
-        boolean result = false
+    Map checkResponse(Map response) {
 
         // How is it suitable to use 'switch' here and anywhere? Normally, Is it a bad practice or not?
-        switch (responseStatus) {
+
+        switch (response.status) {
 
             case 'OK':
-                result = true
-                break
-
             case 'ZERO_RESULTS':
-                result = true
                 break
 
             case 'OVER_QUERY_LIMIT':
@@ -46,6 +42,6 @@ class GoogleAPIChecker {
                 throw new GoogleAPILocatorException('The Google Places API has probably changed!')
         }
 
-        return result
+        response
     }
 }

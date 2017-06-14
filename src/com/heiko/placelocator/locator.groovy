@@ -1,18 +1,16 @@
 package com.heiko.placelocator
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
-import com.heiko.placelocator.location.Places
 import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.HTTPClientBuilder
 import com.heiko.placelocator.http.URLBuilder
+import com.heiko.placelocator.initializers.Initializer
+import com.heiko.placelocator.location.Locations
 import com.heiko.placelocator.parser.ParserBuilder
-import com.heiko.placelocator.search.PlaceSearcher
+import com.heiko.placelocator.parser.ResponseParser
 import com.heiko.placelocator.search.PlaceSearcherBuilder
-import com.heiko.placelocator.utils.CommandLineParser
-import com.heiko.placelocator.utils.ConfigReader
-
-import static com.heiko.placelocator.utils.GoogleAPIChecker.isResponseOK
-import static com.heiko.placelocator.utils.Looper.loop
+import com.heiko.placelocator.search.Searcher
+import com.heiko.placelocator.search.SearcherIterator
 
 // TODO: find the fringe test cases
 // TODO: write JavaDOCs
@@ -28,53 +26,47 @@ import static com.heiko.placelocator.utils.Looper.loop
  * @return nearest possible places ranged from 1 to 5
  */
 
-Map result = [status: "ERROR"] // default response
+String result = /[status: "ERROR"]/ // default response
+Locations locations = new Locations()
 
 try {
     // Read the initial configuration from the default configuration file, parse
     // command line arguments and put them into the initial configuration object
-    final ConfigObject config = CommandLineParser.parse(args, ConfigReader.read())
+    final ConfigObject config = Initializer.getConfiguration(args)
 
     // Get parser according to configuration parameters
-    final responseParser = new ParserBuilder().get(config)
+    final ResponseParser responseParser = new ParserBuilder().get(config.urlFormat as String)
 
     // Get HTTPClient
-    final HTTPClient httpClient = new HTTPClientBuilder().get(config)
+    final HTTPClient httpClient = new HTTPClientBuilder().get(config.HTTPClient as String)
 
-    // Get PlaceSearcher
-    final PlaceSearcher placeSearcher = new PlaceSearcherBuilder().get(config)
+    // Creates URLBuilder object and initializes it according to configuration parameters
+    final URLBuilder urlBuilder = new URLBuilder(config.urlOptions as Map,
+                                                config.urlPrefix as String,
+                                                config.urlMethod as String,
+                                                config.urlFormat as String)
 
-    // a kind of a do-while cycle
-    loop {
-        // Build and return an appropriate url according to configuration parameters
-        final String url = new URLBuilder().getURL(config)
+    // Get Searcher
+    final Searcher searcher = new PlaceSearcherBuilder().get(responseParser,
+                                                            httpClient,
+                                                            urlBuilder,
+                                                            config)
 
-        // Send request and obtain result by the specified url
-        final String response = httpClient.get(url)
+    SearcherIterator search = searcher.getSearch()
 
-        // Parse the obtained result into Map
-        Map parsedResponse = responseParser.parse(response) as Map
+    while (search.isSearchFinished()) {
 
-        // if a valid response was gotten
-        if (isResponseOK(parsedResponse.status as String)) {
+        search.doSearch()
 
-            Places places = new Places(
-                    parsedResponse.results as List,
-                    config.excludedTypes as List,
-                    config.latitude as double,
-                    config.lonitude as double)
+    }
 
-            // try to find the closest place
-            result = placeSearcher.find(parsedResponse.results as List, config) as Map
-        }
-    } until { placeSearcher.isResultAchieved() || placeSearcher.changeSearch(config) }
+    result = searcher.getResults()
 
     println result
 
-    return result
-
 } catch (GoogleAPILocatorException e) {
-    result.put('LocatorAPI error message', e.getMessage())
+
+    result += 'LocatorAPI error message: ' + e.getMessage()
 
     println result
 

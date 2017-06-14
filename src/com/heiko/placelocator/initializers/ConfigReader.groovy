@@ -1,4 +1,4 @@
-package com.heiko.placelocator.utils
+package com.heiko.placelocator.initializers
 
 /**
  * Uses a {@code ConfigSlurper} class to reads property file (groovy script)

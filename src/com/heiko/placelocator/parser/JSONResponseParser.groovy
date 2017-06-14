@@ -2,12 +2,12 @@ package com.heiko.placelocator.parser
 
 import groovy.json.JsonSlurper
 
-class JSONResponseParser implements ResponseParser {
+class JSONResponseParser implements ResponseParser,GoogleAPIChecker {
 
     final JsonSlurper slurper = new JsonSlurper()
 
     @Override
-    def parse(final String text) {
-        slurper.parseText text
+    Map parse(final String text) {
+        checkResponse(slurper.parseText(text) as Map)
     }
 }

@@ -14,4 +14,15 @@ class Place {
         this.types = types
         this.vicinity = vicinity
     }
+
+    @Override
+    public String toString() {
+        return "Place{" +
+                "location=" + location +
+                ", name='" + name + '\'' +
+                ", place_id='" + place_id + '\'' +
+                ", types=" + types +
+                ", vicinity='" + vicinity + '\'' +
+                '}';
+    }
 }

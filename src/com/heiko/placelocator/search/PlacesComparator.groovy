@@ -1,4 +1,4 @@
-package com.heiko.placelocator.search.simplesearch
+package com.heiko.placelocator.search
 
 import com.heiko.placelocator.location.Place
 

@@ -1,4 +1,4 @@
-package com.heiko.placelocator.utils
+package com.heiko.placelocator
 
 /**
  * Adds kinda do/while cycle into the groovy language

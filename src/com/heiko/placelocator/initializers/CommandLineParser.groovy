@@ -1,4 +1,4 @@
-package com.heiko.placelocator.utils
+package com.heiko.placelocator.initializers
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
 
@@ -67,9 +67,16 @@ class CommandLineParser {
         // Handle all non-option arguments.
         def extraArguments = options.arguments()
         if (extraArguments.size() == 2) {
+
             try {
-                config.latitude = Double.parseDouble(extraArguments[0])
-                config.longitude = Double.parseDouble(extraArguments[1])
+                double latitude = Double.parseDouble(extraArguments[0])
+                double longitude = Double.parseDouble(extraArguments[1])
+
+                config.urlOptions.put("location", "$latitude,$longitude")
+
+                config.latitude = latitude
+                config.longitude = longitude
+
             } catch (NumberFormatException e) {
                 throw new GoogleAPILocatorException('Incorrect command line arguments. ' +
                         '[latitude] and [longitude] must be double numbers')

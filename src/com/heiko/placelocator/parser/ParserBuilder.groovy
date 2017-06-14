@@ -10,17 +10,17 @@ class ParserBuilder {
     /**
      * Creates a {@link ResponseParser} object according to configuration parameters.
      *
-     * @param config {@code ConfigObject} with configuration parameters
-     * @return specified format parser
+     * @param format {@code String} with a format type
+     * @return a {@link ResponseParser} object
      * @throws GoogleAPILocatorException if xml format is chosen cause it isn't implemented
      */
-    ResponseParser get(ConfigObject config) {
+    ResponseParser get(String format) {
         final ResponseParser parser
 
-        if (config.format == 'json') {
+        if (format == 'json') {
             parser = new JSONResponseParser()
         } else {
-            throw new GoogleAPILocatorException("The script doesn't have a parser implementation for such a format ($config.format)")
+            throw new GoogleAPILocatorException("The script doesn't have a parser implementation for such a format ($format)")
         }
 
         return parser

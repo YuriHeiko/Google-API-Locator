@@ -11,18 +11,18 @@ class HTTPClientBuilder {
      * Creates and returns a new HTTPClient which version is
      * based on the configuration parameter - 'HTTPClient'.
      *
-     * @param config {@code ConfigObject} with configuration parameters
-     * @return a HTTPClient object
+     * @param clientType {@code String} with a HTTP client type
+     * @return a {@link HTTPClient} object
      * @throws GoogleAPILocatorException if a chosen HTTPClient isn't implemented
      */
-    HTTPClient get(ConfigObject config) {
+    HTTPClient get(String clientType) {
 
         final HTTPClient httpClient
 
-        if (config.HTTPClient == 'simple') {
+        if (clientType == 'simple') {
             httpClient = new SimpleHTTPClient()
         } else {
-            throw new GoogleAPILocatorException("The script doesn't have such a HTTP-client implementation ($config.HTTPClient)")
+            throw new GoogleAPILocatorException("The script doesn't have such a HTTP-client implementation ($clientType)")
         }
 
         return httpClient
