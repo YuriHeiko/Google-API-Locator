@@ -1,7 +1,8 @@
 package com.heiko.placelocator.exceptions
 
 class InvalidRequestException extends GoogleAPILocatorException {
+
     InvalidRequestException(String message) {
-        super(message)
+        super(message, 'INVALID_REQUEST')
     }
 }

@@ -2,7 +2,7 @@ package com.heiko.placelocator.http
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
 
-class HTTPClientBuilder {
+class HTTPClientFactory {
 
     /**
      * Creates and returns a new HTTPClient which version is

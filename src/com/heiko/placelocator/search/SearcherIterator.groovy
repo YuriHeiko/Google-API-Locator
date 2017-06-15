@@ -2,7 +2,7 @@ package com.heiko.placelocator.search
 
 interface SearcherIterator {
 
-    boolean isSearchNeeded()
+    boolean isSearchFinished()
 
-    void doSearch()
+    String doSearch()
 }

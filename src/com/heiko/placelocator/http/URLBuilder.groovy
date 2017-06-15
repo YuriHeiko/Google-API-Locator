@@ -12,27 +12,15 @@ class URLBuilder {
         this.urlOptions = urlOptions
     }
 
-    boolean changeOption(String key, def value) {
-
-        boolean result = false
-
-        // TODO: rewrite
-        try {
-            result = urlOptions.put(key, value)
-        } catch (Exception e) {
-            println e.getMessage()
-            result = false
-        }
-
-        return result
+    boolean setOption(String key, def value) {
+        urlOptions.put(key, value)
     }
 
-    def getOption(final String key) {
+    String getOption(final String key) {
         urlOptions.get(key)
     }
 
     String get() {
-
         new StringBuilder(urlPrefix) <<
                 urlOptions.
                         keySet().

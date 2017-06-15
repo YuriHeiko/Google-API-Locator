@@ -51,20 +51,20 @@ class Place {
     String toString() {
 
         def locationStr = location.toString().
-                replaceAll(/\[/, /{"/).
-                replaceAll(/\]/, /"}/).
-                replaceAll(/, /, /", "/).
+                replaceAll(/\{/, /{"/).
+                replaceAll(/}/, /"}/).
+                replaceAll(/, /, /, "/).
                 replaceAll(/=/, /": /)
 
         def typesStr = types.toString().
                 replaceAll(/\[/, /["/).
-                replaceAll(/\]/, /"]/).
+                replaceAll(/]/, /"]/).
                 replaceAll(/, /, /", "/)
 
         // it doesn't work with return ??? WTF
 //        return /["location": "$location", "name": "$name", "place_id": "$place_id", "types": "$types", "vicinity": "$vicinity", "distance": "$distance"]/
-        /"name": "$name", "description": {"location": "$locationStr", "place_id": "$place_id",/ +
-                /"types": "$typesStr", "vicinity": "$vicinity", "distance": $distance}/
+        /"name": "$name", "description": {"location": $locationStr, "place_id": "$place_id",/ +
+                /"types": $typesStr, "vicinity": "$vicinity", "distance": $distance}/
     }
 
 

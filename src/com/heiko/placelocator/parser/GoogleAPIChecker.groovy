@@ -19,8 +19,6 @@ trait GoogleAPIChecker {
      */
     Map checkResponse(Map response) {
 
-        // How is it suitable to use 'switch' here and anywhere? Normally, Is it a bad practice or not?
-        def message = /["status": /
         switch (response.status) {
 
             case 'OK':
@@ -28,22 +26,18 @@ trait GoogleAPIChecker {
                 break
 
             case 'OVER_QUERY_LIMIT':
-                throw new OverQueryLimitException(/${message}"OVER_QUERY_LIMIT", / +
-                                                /"cause": "Query limit has been exceeded!"]/)
+                throw new OverQueryLimitException('Query limit has been exceeded!')
 
             case 'REQUEST_DENIED':
-                throw new RequestDeniedException(/${message}"REQUEST_DENIED", / +
-                                                /"cause": "Google API has denied your request! / +
-                                                /Generally because of lack of an invalid key parameter"]/)
+                throw new RequestDeniedException('Google API has denied your request! ' +
+                                                'Generally because of lack of an invalid key parameter')
 
             case 'INVALID_REQUEST':
-                throw new InvalidRequestException(/${message}"INVALID_REQUEST", / +
-                                                /"cause": "Invalid request format. Generally indicates that/ +
-                                                /a required query parameter (location or radius) is missing"]/)
+                throw new InvalidRequestException('Invalid request format. Generally indicates that' +
+                                                'a required query parameter (location or radius) is missing')
 
             default:
-                throw new GoogleAPILocatorException(/${message}"UNKNOW_ERROR", / +
-                                                /"cause": "The Google Places API has probably changed!"]/)
+                throw new GoogleAPILocatorException('The Google Places API has probably changed!')
         }
 
         response

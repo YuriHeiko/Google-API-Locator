@@ -9,19 +9,18 @@ class CommandLineParser {
      * and put them into a config file
      *
      * @param args command line arguments
-     * @param config script's {@code ConfigObject}
+     * @return a {@code ConfigObject} object
      * @throws GoogleAPILocatorException if command line arguments are incorrect
      */
-    static ConfigObject parse(final String[] args, ConfigObject config) {
+    static Map parse(final String[] args) {
+        Map config = new HashMap()
+
         def cli = new CliBuilder(usage: 'locator.groovy -[dfhkr] [latitude] [longitude]')
 
         // Create the list of options.
         cli.with {
             h longOpt: 'help', 'Show usage information'
             d longOpt: 'do-not-filter-by-types', 'Turn off filtering by types'
-            f longOpt: 'format', args: 1, argName: 'format', 'Response format can be "json" or "xml"'
-//            k longOpt: 'key', args: 1, argName: 'key', 'Use the authorization key'
-            r longOpt: 'radius', args: 1, argName: 'radius', 'Use the radius'
         }
 
         def options = cli.parse(args)
@@ -36,16 +35,7 @@ class CommandLineParser {
         }
 
         if (options.d) {
-            if (config.types)
-                config.excludedTypes = new ArrayList<>()
-        }
-
-        if (options.f) {
-            config.format = options.format
-        }
-
-        if (options.k) {
-            config.authorizationKey = options.key
+            config.excludedTypes = []
         }
 
         // Handle all non-option arguments.
@@ -56,8 +46,7 @@ class CommandLineParser {
                 double latitude = Double.parseDouble(extraArguments[0])
                 double longitude = Double.parseDouble(extraArguments[1])
 
-                config.urlOptions.put("location", "$latitude,$longitude")
-
+                config.urlOptions = [location: "$latitude,$longitude"]
                 config.latitude = latitude
                 config.longitude = longitude
 

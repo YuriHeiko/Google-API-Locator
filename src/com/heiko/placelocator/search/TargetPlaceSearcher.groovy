@@ -5,7 +5,11 @@ import com.heiko.placelocator.http.URLBuilder
 import com.heiko.placelocator.location.Places
 import com.heiko.placelocator.parser.ResponseParser
 
-class PlaceSearcher implements Searcher {
+class TargetPlaceSearcher implements Searcher {
+
+    private final String ZERO_RESULTS = /["status": "ZERO_RESULTS"]/
+    private final String STATUS_OK = /["status": "OK", "location": /
+    private final int MAX_ITERATIONS_NUMBER = 4
 
     private int iterationsCounter
     private int radius
@@ -19,53 +23,54 @@ class PlaceSearcher implements Searcher {
     private List excludedTypes
     private double initialLat
     private double initialLng
-    private StringBuilder response
+    private boolean isLocationFound
 
-    PlaceSearcher(ResponseParser responseParser, HTTPClient httpClient, URLBuilder urlBuilder, ConfigObject config) {
+    TargetPlaceSearcher(ResponseParser responseParser, HTTPClient httpClient, URLBuilder urlBuilder, ConfigObject config) {
         this.responseParser = responseParser
         this.httpClient = httpClient
         this.urlBuilder = urlBuilder
-        this.excludedTypes = config.excludedTypes
+
+        excludedTypes = config.excludedTypes
         initialLat = config.latitude
         initialLng = config.longitude
-
-        iterationsCounter = 4
         radius = urlBuilder.getOption('radius') as int
-        tendency = 0
         rate = config.rate
-        response = new StringBuilder()
+        iterationsCounter = MAX_ITERATIONS_NUMBER
     }
 
-
-    private boolean check() {
-        boolean result = true
-
+    private StringBuilder findLocation() {
         if (iterationsCounter > 0) {
             if (places.getSize() == 0) {
-                radius *= rate / (tendency < 0 ? 2 : 1)
-                tendency = 1
-                result = false
+                changeRadius(1)
             } else if (places.getSize() > 10 && iterationsCounter < 4) {
-                rate /= 2
-                radius /= rate
-                tendency = -1
-                result = false
-
                 placesPrev = places
+                changeRadius(-1)
             }
         }
 
-        result
+        return makeResponse()
     }
 
-    private void finish() {
-        if (places.getSize() == 0)
+    private void changeRadius(int newTendency) {
+        if (tendency > 0) {
+            radius *= rate / (tendency < 0 && newTendency > 0 ? 2 : 1)
+        } else {
+            rate /= 2
+            radius /= rate
+        }
+        tendency = newTendency
+
+        urlBuilder.setOption("radius", radius)
+    }
+
+    private StringBuilder makeResponse() {
+        StringBuilder response = new StringBuilder()
+
+        if (places.getSize() == 0 && placesPrev)
             places = placesPrev
 
-        if (places.getSize() == 0) {
-            response << /["status": "ZERO_RESULTS"]/
-        } else {
-            response << /["status": "OK", "location": /
+        if (places.getSize() > 0) {
+            response << STATUS_OK
             int firstDistance = places.getPlaces().first().getDistance()
             int lastIndex = 0
 
@@ -75,11 +80,12 @@ class PlaceSearcher implements Searcher {
             }
 
             response << places.getResponse(lastIndex)
-        }
-    }
 
-    private void change() {
-        urlBuilder.changeOption("radius", radius)
+        } else {
+            response << ZERO_RESULTS
+        }
+
+        return response
     }
 
     @Override
@@ -87,31 +93,22 @@ class PlaceSearcher implements Searcher {
         new Iterator()
     }
 
-    @Override
-    String getResults() {
-        response.toString()
-    }
-
     private class Iterator implements SearcherIterator {
 
         @Override
-        boolean isSearchNeeded() {
-            return !response.size()
+        boolean isSearchFinished() {
+            !(iterationsCounter || isLocationFound)
         }
 
         @Override
-        void doSearch() {
+        String doSearch() {
 
             iterationsCounter--
 
             Map results = responseParser.parse(httpClient.get(urlBuilder.get()) as String)
             places = new Places(results.results, excludedTypes, initialLat, initialLng)
 
-            if (check()) {
-                finish()
-            } else {
-                change()
-            }
+            return findLocation()
         }
     }
 }

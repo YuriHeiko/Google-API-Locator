@@ -6,17 +6,6 @@ package com.heiko.placelocator.initializers
  */
 class ConfigReader {
 
-    final static String DEFAULT_FILE_NAME = 'Properties.groovy'
-
-    /**
-     * Reads properties from the default groovy script file.
-     *
-     * @return The ConfigObject instance
-     */
-    static Map read() {
-        read(new File(DEFAULT_FILE_NAME))
-    }
-
     /**
      * Reads properties from a specified url and fills the property map.
      * Uses {@code ConfigSlurper} class.
