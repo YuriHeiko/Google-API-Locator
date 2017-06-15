@@ -6,9 +6,9 @@ class Place {
     private String place_id
     private List<String> types
     private String vicinity
-    private int distance
+    private double distance
 
-    Place(Map<String, Double> location, String name, String place_id, List<String> types, String vicinity, distance) {
+    Place(Map<String, Double> location, String name, String place_id, List<String> types, String vicinity, double distance) {
         this.location = location
         this.name = name
         this.place_id = place_id
@@ -17,16 +17,15 @@ class Place {
         this.distance = distance
     }
 
-
+    double getDistance() {
+        return distance
+    }
 
     @Override
     public String toString() {
-        return "Place{" +
-                "location=" + location +
-                ", name='" + name + '\'' +
-                ", place_id='" + place_id + '\'' +
-                ", types=" + types +
-                ", vicinity='" + vicinity + '\'' +
-                '}';
+        // it doesn't work with return ??? WTF
+//        return /["location": "$location", "name": "$name", "place_id": "$place_id", "types": "$types", "vicinity": "$vicinity", "distance": "$distance"]/
+        /"name": "$name", "description": ["location": "$location", "place_id": "$place_id",/ +
+                /"types": "$types", "vicinity": "$vicinity", "distance": "$distance"]/
     }
 }

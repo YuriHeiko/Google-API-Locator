@@ -21,7 +21,7 @@ class PlaceSearcher implements Searcher {
     private List excludedTypes
     private double initialLat
     private double initialLng
-    private String result
+    private StringBuilder response
 
     PlaceSearcher(ResponseParser responseParser, HTTPClient httpClient, URLBuilder urlBuilder, ConfigObject config) {
         this.responseParser = responseParser
@@ -31,21 +31,23 @@ class PlaceSearcher implements Searcher {
         initialLat = config.latitude
         initialLng = config.longitude
 
-        iterationsCounter = 0
+        iterationsCounter = 4
         radius = urlBuilder.getOption('radius') as int
         tendency = 0
         rate = config.rate
+        response = new StringBuilder()
     }
+
 
     private boolean check() {
         boolean result = true
 
-        if (iterationsCounter != 4) {
+        if (iterationsCounter > 0) {
             if (places.getSize() == 0) {
                 radius *= rate / (tendency < 0 ? 2 : 1)
                 tendency = 1
                 result = false
-            } else if (places.getSize() > 10 && iterationsCounter > 1) {
+            } else if (places.getSize() > 10 && iterationsCounter < 4) {
                 rate /= 2
                 radius /= rate
                 tendency = -1
@@ -55,19 +57,27 @@ class PlaceSearcher implements Searcher {
             }
         }
 
-        return result
+        result
     }
 
     private void finish() {
         if (places.getSize() == 0)
             places = placesPrev
 
-        places.getPlaces().first().
+        if (places.getSize() == 0) {
+            response << /["status": "ZERO_RESULTS"]/
+        } else {
+            response << /["status": "OK", "location": /
+            int firstDistance = places.getPlaces().first().getDistance()
+            int lastIndex = 0
 
-        places.getPlaces().each { e ->
+            places.getPlaces().each { e ->
+                if (Math.abs(firstDistance - e.getDistance() as int) < 14)
+                    lastIndex++
+            }
 
+            response << places.getResponse(lastIndex)
         }
-
     }
 
     private void change() {
@@ -80,21 +90,22 @@ class PlaceSearcher implements Searcher {
     }
 
     @Override
-    Locations getResults() {
-        return result
+    String getResults() {
+        response.toString()
     }
 
     private class Iterator implements SearcherIterator {
 
         @Override
-        boolean isSearchFinished() {
-            return iterationsCounter || locations.result.size() != 0
+        boolean isSearchNeeded() {
+            return !response.size()
         }
 
         @Override
         void doSearch() {
 
-            iterationsCounter++
+            iterationsCounter--
+
             Map results = responseParser.parse(httpClient.get(urlBuilder.get()) as String)
             places = new Places(results.results, excludedTypes, initialLat, initialLng)
 

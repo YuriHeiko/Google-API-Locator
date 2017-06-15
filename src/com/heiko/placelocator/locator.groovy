@@ -5,7 +5,6 @@ import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.HTTPClientBuilder
 import com.heiko.placelocator.http.URLBuilder
 import com.heiko.placelocator.initializers.Initializer
-import com.heiko.placelocator.location.Locations
 import com.heiko.placelocator.parser.ParserBuilder
 import com.heiko.placelocator.parser.ResponseParser
 import com.heiko.placelocator.search.PlaceSearcherBuilder
@@ -26,10 +25,7 @@ import com.heiko.placelocator.search.SearcherIterator
  * @return nearest possible places ranged from 1 to 5
  */
 
-String result = /[status: "ERROR"]/ // default response
-Locations locations = new Locations()
-
-return
+String response = /[status: "ERROR"]/ // default response
 
 try {
     // Read the initial configuration from the default configuration file, parse
@@ -56,21 +52,21 @@ try {
 
     SearcherIterator search = searcher.getSearch()
 
-    while (search.isSearchFinished()) {
+    while (search.isSearchNeeded()) {
 
         search.doSearch()
 
     }
 
-    result = searcher.getResults()
+    response = searcher.getResults()
 
-    println result
+    println response
 
 } catch (GoogleAPILocatorException e) {
 
-    result += 'LocatorAPI error message: ' + e.getMessage()
+    response += 'LocatorAPI error message: ' + e.getMessage()
 
-    println result
+    println response
 
-    return result
+    return response
 }

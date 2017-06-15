@@ -5,5 +5,5 @@ import com.heiko.placelocator.location.Locations
 interface Searcher {
     SearcherIterator getSearch()
 
-    Locations getResults()
+    String getResults()
 }

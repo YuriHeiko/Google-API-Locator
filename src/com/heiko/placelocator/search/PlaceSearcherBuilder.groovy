@@ -32,27 +32,3 @@ class PlaceSearcherBuilder {
         return searcher
     }
 }
-
-
-/*
-    */
-/**
-     * Creates the default search algorithm implementation
-     *
-     * @param config {@code ConfigObject} with configuration parameters
-     * @return a {@link PlaceSearcher} object
-     * @throws GoogleAPILocatorException if a chosen search algorithm isn't implemented
-     *//*
-
-    PlaceSearcher get(ConfigObject config) {
-        final PlaceSearcher placeSearcher
-
-        if (config.PlaceSearcher == 'simple') {
-            placeSearcher = new SimplePlaceSearcher()
-        } else {
-            throw new GoogleAPILocatorException("The script doesn't have such a search algorithm implementation ($config.PlaceSearcher)")
-        }
-
-        return placeSearcher
-    }
-*/
