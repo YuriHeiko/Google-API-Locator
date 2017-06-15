@@ -12,7 +12,7 @@ class CommandLineParser {
      * @param config script's {@code ConfigObject}
      * @throws GoogleAPILocatorException if command line arguments are incorrect
      */
-    static ConfigObject parse(String[] args, ConfigObject config) {
+    static ConfigObject parse(final String[] args, ConfigObject config) {
         def cli = new CliBuilder(usage: 'locator.groovy -[dfhkr] [latitude] [longitude]')
 
         // Create the list of options.
@@ -47,22 +47,6 @@ class CommandLineParser {
         if (options.k) {
             config.authorizationKey = options.key
         }
-
-/*
-        if (options.r) {
-            try {
-                config.radius = Integer.parseInt(options.radius)
-            } catch (NumberFormatException e) {
-                throw new GoogleAPILocatorException('Incorrect command line arguments. ' +
-                        'Radius must be an integer')
-            } finally {
-                if (config.radius < 10) {
-                    throw new GoogleAPILocatorException('Incorrect command line arguments. ' +
-                            'Radius must be greater than 10')
-                }
-            }
-        }
-*/
 
         // Handle all non-option arguments.
         def extraArguments = options.arguments()

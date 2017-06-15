@@ -1,7 +1,7 @@
 package com.heiko.placelocator.initializers
 
 /**
- * Uses a {@code ConfigSlurper} class to reads property file (groovy script)
+ * Uses a {@code ConfigSlurper} class to reads property file (Groovy script)
  * and returns a {@code ConfigObject} instance.
  */
 class ConfigReader {
@@ -24,7 +24,7 @@ class ConfigReader {
      * @param location The original location of the Script as a URL
      * @return The ConfigObject instance
      */
-    static Map read(URL location) {
+    static Map read(final URL location) {
         new ConfigSlurper().parse(location)
     }
 
@@ -33,7 +33,7 @@ class ConfigReader {
      *
      * @return The ConfigObject instance
      */
-    static Map read(File file) {
+    static Map read(final File file) {
         read(file.toURI().toURL())
     }
 }

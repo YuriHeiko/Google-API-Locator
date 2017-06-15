@@ -6,8 +6,9 @@ import java.util.stream.Collectors
  *
  */
 class URLBuilder {
-    final String[] urlPrefix
-    Map urlOptions
+
+    private final String[] urlPrefix
+    private Map urlOptions
 
     URLBuilder(Map urlOptions, String... urlPrefix) {
         this.urlPrefix = urlPrefix
@@ -24,9 +25,11 @@ class URLBuilder {
 
         boolean result = false
 
+        // TODO: rewrite
         try {
             result = urlOptions.put(key, value)
         } catch (Exception e) {
+            println e.getMessage()
             result = false
         }
 
@@ -38,7 +41,7 @@ class URLBuilder {
      * @param key
      * @return
      */
-    def getOption(String key) {
+    def getOption(final String key) {
         urlOptions.get(key)
     }
 
@@ -62,6 +65,6 @@ class URLBuilder {
                 map({k -> k + '=' + urlOptions.get(k)}).
                 collect(Collectors.joining('&'))
 
-        builder.toString()
+        return builder
     }
 }

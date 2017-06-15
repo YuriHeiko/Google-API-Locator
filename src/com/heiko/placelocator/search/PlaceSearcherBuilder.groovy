@@ -5,9 +5,6 @@ import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.URLBuilder
 import com.heiko.placelocator.parser.ResponseParser
 
-/**
- * This is an util class
- */
 class PlaceSearcherBuilder {
 
     /**
@@ -20,7 +17,7 @@ class PlaceSearcherBuilder {
     Searcher get(ResponseParser responseParser, HTTPClient httpClient,
                  URLBuilder urlBuilder, ConfigObject config) {
 
-        final Searcher searcher
+        Searcher searcher
 
         if (config.placeSearcher == 'new') {
             searcher = new PlaceSearcher(responseParser, httpClient, urlBuilder, config)

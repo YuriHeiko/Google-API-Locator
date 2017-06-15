@@ -2,9 +2,6 @@ package com.heiko.placelocator.http
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
 
-/**
- * This is an util class
- */
 class HTTPClientBuilder {
 
     /**
@@ -15,7 +12,7 @@ class HTTPClientBuilder {
      * @return a {@link HTTPClient} object
      * @throws GoogleAPILocatorException if a chosen HTTPClient isn't implemented
      */
-    HTTPClient get(String clientType) {
+    HTTPClient get(final String clientType) {
 
         final HTTPClient httpClient
 

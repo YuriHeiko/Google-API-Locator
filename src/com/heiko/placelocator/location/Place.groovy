@@ -1,6 +1,7 @@
 package com.heiko.placelocator.location
 
 class Place {
+
     private Map<String, Double> location
     private String name
     private String place_id
@@ -23,9 +24,23 @@ class Place {
 
     @Override
     public String toString() {
+
+        def locationStr = location.toString().
+                replaceAll(/\[/, /{"/).
+                replaceAll(/\]/, /"}/).
+                replaceAll(/, /, /", "/).
+                replaceAll(/=/, /: /)
+
+        def typesStr = types.toString().
+                replaceAll(/\[/, /["/).
+                replaceAll(/\]/, /"]/).
+                replaceAll(/, /, /", "/)
+
         // it doesn't work with return ??? WTF
 //        return /["location": "$location", "name": "$name", "place_id": "$place_id", "types": "$types", "vicinity": "$vicinity", "distance": "$distance"]/
-        /"name": "$name", "description": ["location": "$location", "place_id": "$place_id",/ +
-                /"types": "$types", "vicinity": "$vicinity", "distance": "$distance"]/
+        /"name": "$name", "description": {"location": "$locationStr", "place_id": "$place_id",/ +
+                /"types": "$typesStr", "vicinity": "$vicinity", "distance": $distance}/
     }
+
+
 }

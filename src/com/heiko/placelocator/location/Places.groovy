@@ -29,19 +29,19 @@ class Places {
         places.size()
     }
 
-    List<Places> getPlaces() {
+    List<Place> getPlaces() {
         places
     }
 
     String getResponse(int lastIndex) {
 
-        StringBuilder response = new StringBuilder('[')
+        StringBuilder response = new StringBuilder('{')
 
         places.subList(0, lastIndex).each { e ->
             response << e.toString() << ','
         }
 
-        response.deleteCharAt(response.size() - 1) << ']'
+        response.deleteCharAt(response.size() - 1) << '}'
 
         return response
     }

@@ -5,8 +5,6 @@ urlPrefix = 'https://maps.googleapis.com/maps/api/place'
 urlMethod = 'nearbysearch'
 urlFormat = 'json'
 urlOptions = [key: 'AIzaSyBCdeSMg1PnVaAOaEVrB_GIog-q6fs27Fw', radius: 14]
-//latitude = 0
-//longitude = 0
 
 // initial
 HTTPClient = 'simple'

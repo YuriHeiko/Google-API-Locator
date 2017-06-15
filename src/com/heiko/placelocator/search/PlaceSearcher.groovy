@@ -2,10 +2,8 @@ package com.heiko.placelocator.search
 
 import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.URLBuilder
-import com.heiko.placelocator.location.Locations
 import com.heiko.placelocator.location.Places
 import com.heiko.placelocator.parser.ResponseParser
-
 
 class PlaceSearcher implements Searcher {
 
@@ -23,6 +21,7 @@ class PlaceSearcher implements Searcher {
     private double initialLng
     private StringBuilder response
 
+    // TODO: Add getters instead of the constructor
     PlaceSearcher(ResponseParser responseParser, HTTPClient httpClient, URLBuilder urlBuilder, ConfigObject config) {
         this.responseParser = responseParser
         this.httpClient = httpClient

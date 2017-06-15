@@ -25,8 +25,6 @@ import com.heiko.placelocator.search.SearcherIterator
  * @return nearest possible places ranged from 1 to 5
  */
 
-String response = /[status: "ERROR"]/ // default response
-
 try {
     // Read the initial configuration from the default configuration file, parse
     // command line arguments and put them into the initial configuration object
@@ -53,20 +51,18 @@ try {
     SearcherIterator search = searcher.getSearch()
 
     while (search.isSearchNeeded()) {
-
         search.doSearch()
-
     }
 
-    response = searcher.getResults()
+    println searcher.getResults()
 
-    println response
+    return searcher.getResults()
 
 } catch (GoogleAPILocatorException e) {
 
-    response += 'LocatorAPI error message: ' + e.getMessage()
 
-    println response
+    println e.getMessage()
 
-    return response
+    return e.getMessage()
+
 }
