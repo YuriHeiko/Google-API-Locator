@@ -12,7 +12,7 @@ class HTTPClientFactory {
      * @return a {@link HTTPClient} object
      * @throws GoogleAPILocatorException if a chosen HTTPClient isn't implemented
      */
-    HTTPClient get(final String clientType) {
+    HTTPClient create(final String clientType) {
 
         final HTTPClient httpClient
 

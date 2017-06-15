@@ -10,6 +10,7 @@ class TargetPlaceSearcher implements Searcher {
     private final String ZERO_RESULTS = /["status": "ZERO_RESULTS"]/
     private final String STATUS_OK = /["status": "OK", "location": /
     private final int MAX_ITERATIONS_NUMBER = 4
+    private final int MAX_LOCATIONS_NUMBER = 5
 
     private int iterationsCounter
     private int radius
@@ -79,7 +80,7 @@ class TargetPlaceSearcher implements Searcher {
                     lastIndex++
             }
 
-            response << places.getResponse(lastIndex)
+            response << places.getResponse(lastIndex > MAX_LOCATIONS_NUMBER ? MAX_LOCATIONS_NUMBER : lastIndex)
 
         } else {
             response << ZERO_RESULTS

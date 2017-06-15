@@ -11,7 +11,7 @@ class ParserFactory {
      * @return a {@link ResponseParser} object
      * @throws GoogleAPILocatorException if xml format is chosen cause it isn't implemented
      */
-    ResponseParser get(final String dataFormat) {
+    ResponseParser create(final String dataFormat) {
 
         ResponseParser parser
 

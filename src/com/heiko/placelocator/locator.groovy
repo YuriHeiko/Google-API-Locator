@@ -28,10 +28,10 @@ try {
     config.merge(CommandLineParser.parse(args) as ConfigObject)
 
     // Get parser according to configuration parameters
-    final ResponseParser responseParser = new ParserFactory().get(config.inputDataFormat as String)
+    final ResponseParser responseParser = new ParserFactory().create(config.inputDataFormat as String)
 
     // Get HTTPClient
-    final HTTPClient httpClient = new HTTPClientFactory().get(config.HTTPClientType as String)
+    final HTTPClient httpClient = new HTTPClientFactory().create(config.HTTPClientType as String)
 
     // Creates URLBuilder object and initializes it according to configuration parameters
     final URLBuilder urlBuilder = new URLBuilder(config.urlOptions as Map, config.urlPrefix as String)
