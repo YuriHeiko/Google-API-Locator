@@ -1,7 +1,5 @@
 package com.heiko.placelocator.location
 
-import static com.heiko.placelocator.location.CalculateDistance.calculate
-
 class Places {
 
     private final List<Place> places
@@ -15,8 +13,9 @@ class Places {
 
                 def location = e.geometry.location
 
-                this.places.add(new Place(location, e.name, e.place_id, e.types, e.vicinity,
-                        calculate(initialLat, initialLng, location.lat, location.lng)))
+                def place = new Place(location, e.name, e.place_id, e.types, e.vicinity)
+                place.setDistance(initialLat, initialLng)
+                this.places.add(place)
             }
         }
 
