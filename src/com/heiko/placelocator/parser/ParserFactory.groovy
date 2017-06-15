@@ -18,7 +18,7 @@ class ParserFactory {
         if (dataFormat == 'json') {
             parser = new JSONResponseParser()
         } else {
-            throw new GoogleAPILocatorException('The script does not have a parser implementation ' +
+            throw new GoogleAPILocatorException('The script does not have a responseParser implementation ' +
                                                 "for such a format ($dataFormat)")
         }
 
