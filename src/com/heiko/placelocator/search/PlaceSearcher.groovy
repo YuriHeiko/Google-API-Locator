@@ -21,7 +21,6 @@ class PlaceSearcher implements Searcher {
     private double initialLng
     private StringBuilder response
 
-    // TODO: Add getters instead of the constructor
     PlaceSearcher(ResponseParser responseParser, HTTPClient httpClient, URLBuilder urlBuilder, ConfigObject config) {
         this.responseParser = responseParser
         this.httpClient = httpClient

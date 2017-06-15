@@ -48,13 +48,13 @@ class Place {
     }
 
     @Override
-    public String toString() {
+    String toString() {
 
         def locationStr = location.toString().
                 replaceAll(/\[/, /{"/).
                 replaceAll(/\]/, /"}/).
                 replaceAll(/, /, /", "/).
-                replaceAll(/=/, /: /)
+                replaceAll(/=/, /": /)
 
         def typesStr = types.toString().
                 replaceAll(/\[/, /["/).

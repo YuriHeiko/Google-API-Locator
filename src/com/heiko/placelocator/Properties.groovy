@@ -1,15 +1,15 @@
 package com.heiko.placelocator
 
-// API configuration
-urlPrefix = 'https://maps.googleapis.com/maps/api/place'
-urlMethod = 'nearbysearch'
-urlFormat = 'json'
-urlOptions = [key: 'AIzaSyBCdeSMg1PnVaAOaEVrB_GIog-q6fs27Fw', radius: 14]
-
 // initial
 HTTPClient = 'simple'
 placeSearcher = 'new'
 rate = 6
+format = 'json'
+radius = 14
+
+// API configuration
+urlPrefix = "https://maps.googleapis.com/maps/api/place/nearbysearch/$format?"
+urlOptions = [key: 'AIzaSyBCdeSMg1PnVaAOaEVrB_GIog-q6fs27Fw', radius: (radius)]
 
 // filter
 doNotFilterByTypes = false
