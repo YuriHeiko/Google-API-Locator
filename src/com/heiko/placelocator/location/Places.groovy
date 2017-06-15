@@ -19,9 +19,18 @@ class Places {
                 this.places.add(new Place(location, e.name, e.place_id, e.types, e.vicinity))
             }
         }
+
+        places.sort({p1,p2 ->
+            p1.location.distance <=> p2.location.distance
+        })
     }
 
     int getSize() {
         return places.size()
     }
+
+    List<Places> getPlaces() {
+        return places
+    }
+
 }

@@ -13,14 +13,15 @@ class PlaceSearcher implements Searcher {
     private int radius
     private int tendency
     private int rate
+    private Places placesPrev
     private Places places
     private ResponseParser responseParser
     private HTTPClient httpClient
     private URLBuilder urlBuilder
-    private Locations locations
     private List excludedTypes
     private double initialLat
     private double initialLng
+    private String result
 
     PlaceSearcher(ResponseParser responseParser, HTTPClient httpClient, URLBuilder urlBuilder, ConfigObject config) {
         this.responseParser = responseParser
@@ -29,32 +30,13 @@ class PlaceSearcher implements Searcher {
         this.excludedTypes = config.excludedTypes
         initialLat = config.latitude
         initialLng = config.longitude
-        this.locations = new Locations()
 
         iterationsCounter = 0
-        radius = urlBuilder.getOption('radius')
+        radius = urlBuilder.getOption('radius') as int
         tendency = 0
         rate = config.rate
     }
 
-    /**
-     * Checks search condition:
-     * - if it wasn't the last iteration then
-     * - if nothing found - increases radius:
-     *      if tendency is negative then
-     *          radius = radius * rate / 2
-     *          radius = radius * rate / 1
-     *          tendency = 1
-     *
-     * - if more than 10 places was found and it wasn't the first iteration then
-     *          rate = rate / 2
-     *          radius = radius / rate
-     *          tendency = -1
-     *
-     * In other cases, continues search
-     *
-     * @return true if results is achieved or the iteration number is greater then 4
-     */
     private boolean check() {
         boolean result = true
 
@@ -68,6 +50,8 @@ class PlaceSearcher implements Searcher {
                 radius /= rate
                 tendency = -1
                 result = false
+
+                placesPrev = places
             }
         }
 
@@ -75,7 +59,15 @@ class PlaceSearcher implements Searcher {
     }
 
     private void finish() {
-        // create Locations object
+        if (places.getSize() == 0)
+            places = placesPrev
+
+        places.getPlaces().first().
+
+        places.getPlaces().each { e ->
+
+        }
+
     }
 
     private void change() {
@@ -89,7 +81,7 @@ class PlaceSearcher implements Searcher {
 
     @Override
     Locations getResults() {
-        return locations
+        return result
     }
 
     private class Iterator implements SearcherIterator {
@@ -103,7 +95,7 @@ class PlaceSearcher implements Searcher {
         void doSearch() {
 
             iterationsCounter++
-            Map results = responseParser.parse(httpClient.get(urlBuilder.get()))
+            Map results = responseParser.parse(httpClient.get(urlBuilder.get()) as String)
             places = new Places(results.results, excludedTypes, initialLat, initialLng)
 
             if (check()) {
