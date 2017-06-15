@@ -15,7 +15,7 @@ class CommandLineParser {
     static Map parse(final String[] args) {
         Map config = new HashMap()
 
-        def cli = new CliBuilder(usage: 'locator.groovy -[dfhkr] [latitude] [longitude]')
+        def cli = new CliBuilder(usage: 'Locator.groovy -[dfhkr] [latitude] [longitude]')
 
         // Create the list of options.
         cli.with {

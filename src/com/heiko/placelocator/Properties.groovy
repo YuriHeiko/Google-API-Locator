@@ -4,6 +4,8 @@ package com.heiko.placelocator
 HTTPClientType = 'simple'
 placeSearcherType = 'Target searcher'
 rate = 6
+iterationNumber = 4
+locationNumber = 5
 radius = 14
 
 // API configuration

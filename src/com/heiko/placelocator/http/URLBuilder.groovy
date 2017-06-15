@@ -16,7 +16,7 @@ class URLBuilder {
         urlOptions.put(key, value)
     }
 
-    String getOption(final String key) {
+    def getOption(final String key) {
         urlOptions.get(key)
     }
 

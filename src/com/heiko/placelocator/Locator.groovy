@@ -6,11 +6,12 @@ import com.heiko.placelocator.http.HTTPClientFactory
 import com.heiko.placelocator.http.URLBuilder
 import com.heiko.placelocator.initializers.CommandLineParser
 import com.heiko.placelocator.initializers.ConfigReader
+import com.heiko.placelocator.location.Places
 import com.heiko.placelocator.parser.ParserFactory
 import com.heiko.placelocator.parser.ResponseParser
-import com.heiko.placelocator.search.PlaceSearcherBuilder
-import com.heiko.placelocator.search.Searcher
-import com.heiko.placelocator.search.SearcherIterator
+import com.heiko.placelocator.response.Response
+import com.heiko.placelocator.search2.PlaceSearcherBuilder
+import com.heiko.placelocator.search2.SearcherIterator
 
 /**
  * Uses Google Places Web API to find a nearest possible location
@@ -27,7 +28,7 @@ try {
     // Parse command line arguments and put them into the initial configuration object
     config.merge(CommandLineParser.parse(args) as ConfigObject)
 
-    // Get parser according to configuration parameters
+    // Get responseParser according to configuration parameters
     final ResponseParser responseParser = new ParserFactory().create(config.inputDataFormat as String)
 
     // Get HTTPClient
@@ -37,21 +38,16 @@ try {
     final URLBuilder urlBuilder = new URLBuilder(config.urlOptions as Map, config.urlPrefix as String)
 
     // Get Searcher
-    final Searcher searcher = new PlaceSearcherBuilder().get(responseParser, httpClient, urlBuilder, config)
+    final SearcherIterator iterator = new PlaceSearcherBuilder().get(responseParser, httpClient, urlBuilder, config)
 
-    SearcherIterator search = searcher.getSearch()
-
-    def response = ''
-    while (!search.isSearchFinished()) {
-        response = search.doSearch()
+    Places places
+    while (!iterator.isSearchFinished()) {
+        places = iterator.doSearch()
     }
 
-    println response
-
-    response
+    new Response(places, config.locationNumber)
 
 } catch (GoogleAPILocatorException e) {
 
-    println(/["status": "$e.errorCode", "description": "${e.getMessage()}"]/)
-
+    new Response(e.errorCode, e.getMessage())
 }
