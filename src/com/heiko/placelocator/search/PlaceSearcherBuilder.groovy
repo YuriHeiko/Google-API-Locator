@@ -14,18 +14,18 @@ class PlaceSearcherBuilder {
      * @return a {@link TargetPlaceSearcher} object
      * @throws GoogleAPILocatorException if a chosen search algorithm isn't implemented
      */
-    Searcher get(ResponseParser responseParser, HTTPClient httpClient,
+    SearcherIterator get(ResponseParser responseParser, HTTPClient httpClient,
                  URLBuilder urlBuilder, ConfigObject config) {
 
-        Searcher searcher
+        SearcherIterator searcherIterator
 
         if (config.placeSearcherType == 'Target searcher') {
-            searcher = new TargetPlaceSearcher(responseParser, httpClient, urlBuilder, config)
+            searcherIterator = new TargetPlaceSearcher(urlBuilder, httpClient, responseParser, config)
         } else {
             throw new GoogleAPILocatorException("The script doesn't have such a search algorithm" +
                     " implementation ($config.placeSearcherType)")
         }
 
-        return searcher
+        return searcherIterator
     }
 }

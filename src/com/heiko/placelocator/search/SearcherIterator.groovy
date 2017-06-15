@@ -1,8 +1,10 @@
 package com.heiko.placelocator.search
 
+import com.heiko.placelocator.location.Places
+
 interface SearcherIterator {
 
     boolean isSearchFinished()
 
-    String doSearch()
+    Places doSearch()
 }

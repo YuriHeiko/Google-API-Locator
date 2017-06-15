@@ -10,8 +10,8 @@ import com.heiko.placelocator.location.Places
 import com.heiko.placelocator.parser.ParserFactory
 import com.heiko.placelocator.parser.ResponseParser
 import com.heiko.placelocator.response.Response
-import com.heiko.placelocator.search2.PlaceSearcherBuilder
-import com.heiko.placelocator.search2.SearcherIterator
+import com.heiko.placelocator.search.PlaceSearcherBuilder
+import com.heiko.placelocator.search.SearcherIterator
 
 /**
  * Uses Google Places Web API to find a nearest possible location
