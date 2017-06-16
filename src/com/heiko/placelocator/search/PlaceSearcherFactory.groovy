@@ -22,8 +22,8 @@ class PlaceSearcherFactory {
         if (config.placeSearcherType == 'Target searcher') {
             searcherIterator = new TargetPlaceSearcher(urlBuilder, httpClient, responseParser, config)
         } else {
-            throw new GoogleAPILocatorException("The script doesn't have such a search algorithm" +
-                    " implementation ($config.placeSearcherType)")
+            throw new GoogleAPILocatorException('The script does not have such a search algorithm ' +
+                    "implementation ($config.placeSearcherType)")
         }
 
         return searcherIterator

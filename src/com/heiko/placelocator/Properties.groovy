@@ -3,16 +3,16 @@ package com.heiko.placelocator
 // initial
 HTTPClientType = 'simple'
 placeSearcherType = 'Target searcher'
-rate = 6
-iterationNumber = 4
-locationNumber = 5
-radius = 14
+maxIterationNumber = 4
+maxLocationNumber = 5
+searchRadius = 14
+searchRate = 6
 
 // API configuration
 inputDataFormat = 'json'
-key = 'AIzaSyBCdeSMg1PnVaAOaEVrB_GIog-q6fs27Fw'
+authorizationKey = 'AIzaSyBCdeSMg1PnVaAOaEVrB_GIog-q6fs27Fw'
 urlPrefix = "https://maps.googleapis.com/maps/api/place/nearbysearch/$inputDataFormat?"
-urlOptions = [key: key, radius: radius]
+urlOptions = [key: authorizationKey, radius: searchRadius]
 
 // filter
 excludedTypes = ['administrative_area_level_1',

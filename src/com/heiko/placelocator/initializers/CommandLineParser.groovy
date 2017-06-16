@@ -47,8 +47,8 @@ class CommandLineParser {
                 double longitude = Double.parseDouble(extraArguments[1])
 
                 config.urlOptions = [location: "$latitude,$longitude"]
-                config.latitude = latitude
-                config.longitude = longitude
+                config.initialLatitude = latitude
+                config.initialLongitude = longitude
 
             } catch (NumberFormatException e) {
                 throw new GoogleAPILocatorException('Incorrect command line arguments. ' +

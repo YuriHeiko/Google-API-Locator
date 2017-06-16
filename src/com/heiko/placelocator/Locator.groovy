@@ -40,14 +40,14 @@ try {
     // Get Searcher
     final SearcherIterator iterator = new PlaceSearcherFactory().create(responseParser, httpClient, urlBuilder, config)
 
+    // Do search
     Places places
     while (!iterator.isSearchFinished()) {
         places = iterator.doSearch()
     }
 
-    new Response(places, config.locationNumber)
+    new Response(places, config.maxLocationNumber)
 
 } catch (GoogleAPILocatorException e) {
-
     new Response(e.errorCode, e.getMessage())
 }
