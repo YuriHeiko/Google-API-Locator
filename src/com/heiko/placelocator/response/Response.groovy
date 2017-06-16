@@ -2,28 +2,36 @@ package com.heiko.placelocator.response
 
 import com.heiko.placelocator.location.Places
 
+/**
+ * Contains the closest places to some initial location
+ */
 class Response {
     private String status
     private Places places
     private String description
+    private final int GPS_ERROR = 14
 
-    String getDescription() {
-        description
-    }
-
-    Places getPlaces() {
-        places
-    }
-
-    String getStatus() {
-        status
-    }
-
+    /**
+     * Constructs the object in case of some error occurred
+     *
+     * @param status the status of the search algorithm work
+     * @param description the error status description
+     */
     Response(String status, String description) {
         this.status = status
         this.description = description
     }
 
+    /**
+     * Constructs the object contains from 1 to 5 the nearest locations to
+     * the initial location. Firstly, it counts elements from the first which
+     * are not further then GPS_ERROR meters from each other, Finally, it
+     * returns these elements but no more then maxLocationNumber
+     *
+     * @param places a {@code Places} object contains the nearest locations to
+     * the initial location
+     * @param maxLocationNumber the maximum number of the closest locations
+     */
     Response(Places places, int maxLocationNumber) {
 
         if (places.getSize() > 0) {
@@ -32,7 +40,7 @@ class Response {
             int lastIndex = 0
 
             places.getPlaces().each { e ->
-                if (Math.abs(firstDistance - e.getDistance() as int) < 14)
+                if (Math.abs(firstDistance - e.getDistance() as int) < GPS_ERROR)
                     lastIndex++
             }
 
@@ -44,11 +52,43 @@ class Response {
         }
     }
 
+    /**
+     * Returns the error status description
+     *
+     * @return the error status description
+     */
+    String getDescription() {
+        description
+    }
+
+    /**
+     * Returns
+     * @return
+     */
+    Places getPlaces() {
+        places
+    }
+
+    /**
+     * Returns the status of the search algorithm work
+     *
+     * @return the status of the search algorithm work
+     */
+    String getStatus() {
+        status
+    }
+
+    /**
+     * Froms and returns the string representation of this object which is
+     * also a valid JSON string
+     *
+     * @return the string representation of this object which is also a valid JSON string
+     */
     @Override
     String toString() {
         String result
 
-        if (description){
+        if (description) {
             result = /["status": "$status", "description": "$description"]/
         } else {
             result = /["status": "$status", "locations": $places]/

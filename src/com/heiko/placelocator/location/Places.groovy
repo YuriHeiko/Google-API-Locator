@@ -36,11 +36,10 @@ class Places {
         })
     }
 
-    // TODO !!!!!!!
     /**
+     * Constructs a new object
      *
-     *
-     * @param places
+     * @param places the already formed list of Place's locations
      */
     Places(List<Place> places) {
         this.places = places
@@ -64,6 +63,15 @@ class Places {
         places
     }
 
+    /**
+     * Returns a new Places object that contains a part of initial held
+     * Place objects.
+     *
+     * @param startIndex the start index
+     * @param lastIndex the last index
+     * @return a new Places object that contains a part of initial held
+     * Place objects
+     */
     Places getPart(int startIndex, int lastIndex) {
         new Places(new ArrayList<Place>(places.subList(startIndex, lastIndex)))
     }
@@ -71,7 +79,7 @@ class Places {
     /**
      * Froms and returns the string representation of this object
      *
-     * @return
+     * @return the string representation of this object
      */
     @Override
     String toString() {

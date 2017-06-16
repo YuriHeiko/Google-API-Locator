@@ -3,11 +3,11 @@ package com.heiko.placelocator
 // initial
 HTTPClientType = 'simple'
 placeSearcherType = 'Target searcher'
-maxIterationNumber = 4
 maxLocationNumber = 5
+possibleLocationsNumber = 10
+maxIterationNumber = 4
 searchRadius = 14
 searchRate = 6
-possibleLocationsNumber = 10
 
 // API configuration
 inputDataFormat = 'json'
