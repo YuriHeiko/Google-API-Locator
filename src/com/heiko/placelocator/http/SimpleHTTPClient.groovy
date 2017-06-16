@@ -4,6 +4,6 @@ class SimpleHTTPClient implements HTTPClient {
 
     @Override
     def get(final String url) {
-        url.toURL().getText()
+        url.toURL().getText() // throws IOException
     }
 }
