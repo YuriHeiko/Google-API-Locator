@@ -10,7 +10,7 @@ import com.heiko.placelocator.location.Places
 import com.heiko.placelocator.parser.ParserFactory
 import com.heiko.placelocator.parser.ResponseParser
 import com.heiko.placelocator.response.Response
-import com.heiko.placelocator.search.PlaceSearcherBuilder
+import com.heiko.placelocator.search.PlaceSearcherFactory
 import com.heiko.placelocator.search.SearcherIterator
 
 /**
@@ -38,7 +38,7 @@ try {
     final URLBuilder urlBuilder = new URLBuilder(config.urlOptions as Map, config.urlPrefix as String)
 
     // Get Searcher
-    final SearcherIterator iterator = new PlaceSearcherBuilder().get(responseParser, httpClient, urlBuilder, config)
+    final SearcherIterator iterator = new PlaceSearcherFactory().create(responseParser, httpClient, urlBuilder, config)
 
     Places places
     while (!iterator.isSearchFinished()) {

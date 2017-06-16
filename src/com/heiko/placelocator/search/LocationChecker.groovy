@@ -3,31 +3,45 @@ package com.heiko.placelocator.search
 import com.heiko.placelocator.location.Places
 
 class LocationChecker {
-
-    private Places places
     private int iterationsCounter
+    private int tendency
+    private int radius
+    private int rate
 
-    LocationChecker(int iterationsCounter) {
+    LocationChecker(int iterationsCounter, int radius, int rate) {
         this.iterationsCounter = iterationsCounter
+        this.radius = radius
+        this.rate = rate
     }
 
-    Places getPlaces() {
-        places
+    int getRadius() {
+        radius
     }
 
-    int check(Places places) {
+    void calculateRadius(int newTendency) {
+        if (tendency > 0) {
+            radius *= rate / (tendency < 0 && newTendency > 0 ? 2 : 1)
+        } else {
+            rate /= 2
+            radius /= rate
+        }
+        tendency = newTendency
+    }
 
-        int tendency = 0
+    boolean check(Places places) {
+        boolean isSearchFinished = true
 
-        if (iterationsCounter > 0) {
+        if (--iterationsCounter > 0) {
+
             if (places.getSize() == 0) {
-                tendency = 1
-            } else if (places.getSize() > 10 && iterationsCounter < 4) {
-                this.places = places
-                tendency = -1
+                calculateRadius(1)
+                isSearchFinished = false
+            } else if (places.getSize() > 10 && iterationsCounter < 3) {
+                calculateRadius(-1)
+                isSearchFinished = false
             }
         }
 
-        tendency
+        isSearchFinished
     }
 }

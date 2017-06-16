@@ -12,7 +12,6 @@ class TargetPlaceSearcher implements SearcherIterator {
     private Places places
     private Places placesPrev
     private boolean isLocationFound
-    private RadiusChanger radiusChanger
     private LocationChecker locationChecker
     private double initialLat
     private double initialLng
@@ -23,8 +22,7 @@ class TargetPlaceSearcher implements SearcherIterator {
         this.httpClient = httpClient
         this.responseParser = responseParser
 
-        radiusChanger = new RadiusChanger(urlBuilder, config.rate)
-        locationChecker = new LocationChecker(config.iterationNumber)
+        locationChecker = new LocationChecker(config.iterationNumber, config.radius, config.rate)
         initialLat = config.latitude
         initialLng = config.longitude
         excludedTypes = config.excludedTypes

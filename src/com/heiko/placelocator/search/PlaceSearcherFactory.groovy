@@ -5,7 +5,7 @@ import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.URLBuilder
 import com.heiko.placelocator.parser.ResponseParser
 
-class PlaceSearcherBuilder {
+class PlaceSearcherFactory {
 
     /**
      * Creates the default search algorithm implementation
@@ -14,8 +14,8 @@ class PlaceSearcherBuilder {
      * @return a {@link TargetPlaceSearcher} object
      * @throws GoogleAPILocatorException if a chosen search algorithm isn't implemented
      */
-    SearcherIterator get(ResponseParser responseParser, HTTPClient httpClient,
-                 URLBuilder urlBuilder, ConfigObject config) {
+    SearcherIterator create(ResponseParser responseParser, HTTPClient httpClient,
+                            URLBuilder urlBuilder, ConfigObject config) {
 
         SearcherIterator searcherIterator
 
