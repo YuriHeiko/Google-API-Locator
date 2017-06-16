@@ -55,4 +55,21 @@ class URLBuilder {
                         map({ k -> k + '=' + urlOptions.get(k) }).
                         collect(Collectors.joining('&'))
     }
+
+    // TODO:
+    /**
+     *
+     *
+     * @return string contains the built url
+     */
+    String get(int newRadius) {
+        setOption("radius", newRadius)
+
+        new StringBuilder(urlPrefix) <<
+                urlOptions.
+                        keySet().
+                        stream().
+                        map({ k -> k + '=' + urlOptions.get(k) }).
+                        collect(Collectors.joining('&'))
+    }
 }
