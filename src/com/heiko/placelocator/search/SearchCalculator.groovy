@@ -11,6 +11,8 @@ class SearchCalculator {
     private int newTendency
     private int radius
     private int rate
+    private int iterationsCounter
+    private int possibleLocationsNumber
 
     /**
      * Constructs a new object and sets initial fields parameters
@@ -19,10 +21,12 @@ class SearchCalculator {
      * @param radius the initial search radius
      * @param rate the initial rate of radius changes
      */
-    SearchCalculator(int maxIterationsCounter, int radius, int rate) {
+    SearchCalculator(int maxIterationsCounter, int possibleLocationsNumber, int radius, int rate) {
         this.maxIterationsCounter = maxIterationsCounter
         this.radius = radius
         this.rate = rate
+        this.possibleLocationsNumber = possibleLocationsNumber
+        iterationsCounter = maxIterationsCounter
     }
 
     /**
@@ -47,18 +51,24 @@ class SearchCalculator {
 
     /**
      * Checks if found locations are the closest or it was the last search iteration.
+     * <p><ul>
+     *     <li>If there are no locations found, sets the positive search tendency returns false.
+     *     <li>If it is not the first search iteration and it is found more then
+     *     possibleLocationsNumber, sets the negative search tendency and returns false.
+     *     <li>Returns true, in the other cases.
+     * </ul><p>
      *
      * @param places a {@code Places} object contains found locations
-     * @return
+     * @return true if search is finished
      */
     boolean check(Places places) {
         boolean isSearchFinished = true
 
-        if (--maxIterationsCounter > 0) {
+        if (--iterationsCounter > 0) {
             if (places.getSize() == 0) {
                 newTendency = 1
                 isSearchFinished = false
-            } else if (places.getSize() > 10 && maxIterationsCounter < 3) {
+            } else if (places.getSize() > possibleLocationsNumber && iterationsCounter < maxIterationsCounter - 1) {
                 newTendency = -1
                 isSearchFinished = false
             }

@@ -7,6 +7,7 @@ maxIterationNumber = 4
 maxLocationNumber = 5
 searchRadius = 14
 searchRate = 6
+possibleLocationsNumber = 10
 
 // API configuration
 inputDataFormat = 'json'

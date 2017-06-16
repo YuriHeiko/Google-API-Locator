@@ -11,11 +11,11 @@ trait GoogleAPIChecker {
      * Checks Google Places API response status
      *
      * @param response {@code Map} that contains parsed JSON response
-     * @return true if status is 'OK' or 'ZERO_RESULTS', throws an exception otherwise
-     * @throws {@link OverQueryLimitException} if query limit is exceeded
-     * @throws {@link RequestDeniedException} if Google API denies a request
-     * @throws {@link InvalidRequestException} if a request has invalid format
-     * @throws {@link GoogleAPILocatorException} if The Google Places API probably changes
+     * @return true if status is 'OK' or 'ZERO_RESULTS'
+     * @throws OverQueryLimitException if query limit is exceeded
+     * @throws RequestDeniedException if Google API denies a request
+     * @throws InvalidRequestException if a request has invalid format
+     * @throws GoogleAPILocatorException if The Google Places API probably changes
      */
     Map checkResponse(Map response) {
 

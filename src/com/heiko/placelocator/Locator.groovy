@@ -18,7 +18,10 @@ import com.heiko.placelocator.search.SearcherIterator
  * by GPS coordinates.
  *
  * @args command line arguments
- * @return nearest possible places ranged from 1 to 5
+ * @return a {@link Response} object contains nearest possible places
+ * ranged from 1 to 5, if they are found. If the search results are not
+ * achieved, {@code Response} object contains the error status and
+ * description
  */
 
 try {

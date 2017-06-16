@@ -1,7 +1,10 @@
 package com.heiko.placelocator.location
 
-class Place {
+/**
+ * Representation of the location characteristics returned by Google Places Web API
+ */
 
+class Place {
     private Map<String, Double> location
     private String name
     private String place_id
@@ -9,6 +12,15 @@ class Place {
     private String vicinity
     private double distance
 
+    /**
+     * Constructs this object that represents location
+     *
+     * @param location map contains location's coordinates
+     * @param name the name of the location
+     * @param place_id the id of the location
+     * @param types the types of the location
+     * @param vicinity the vicinity of the location
+     */
     Place(Map<String, Double> location, String name, String place_id, List<String> types, String vicinity) {
         this.location = location
         this.name = name
@@ -17,18 +29,21 @@ class Place {
         this.vicinity = vicinity
     }
 
+    /**
+     * Returns distance between the initial point coordinates and this ones
+     *
+     * @return distance between the initial point coordinates and this ones
+     */
     double getDistance() {
         return distance
     }
 
     /**
-     * Calculate distance between two points in latitude and longitude taking
-     * into account height difference. If you are not interested in height
-     * difference pass 0.0. Uses Haversine method as its base.
+     * Calculate distance between this point and the initial one in latitude
+     * and longitude. Uses Haversine method as its base.
      *
-     * lat, lng Start point lat2, lon2 End point el1 Start altitude in meters
-     * el2 End altitude in meters
-     * @returns Distance in Meters
+     * @param lat the initial point latitude
+     * @param lng the initial point longitude
      */
     void setDistance(double lat, double lng) {
 
@@ -47,6 +62,12 @@ class Place {
         this.distance = Math.sqrt(distance)
     }
 
+    /**
+     * Froms and returns the string representation of this object which is
+     * also a valid JSON string
+     *
+     * @return the string representation of this object which is also a valid JSON string
+     */
     @Override
     String toString() {
 
@@ -68,6 +89,4 @@ class Place {
         /"name": "$name", "description": $locationStr, "distance": $distance, / +
                 /"types": $typesStr, "vicinity": "$vicinity"}/
     }
-
-
 }

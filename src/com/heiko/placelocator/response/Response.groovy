@@ -45,7 +45,7 @@ class Response {
     }
 
     @Override
-    public String toString() {
+    String toString() {
         String result
 
         if (description){

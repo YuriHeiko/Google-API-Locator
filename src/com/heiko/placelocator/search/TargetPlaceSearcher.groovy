@@ -10,8 +10,7 @@ import com.heiko.placelocator.parser.ResponseParser
 /**
  * Searches the closest location to the initial coordinates. Uses several attempts
  * (no more then {@code config.maxIterationNumber}) and adapt the searching radius
- * according achieved results.
- * Implements {@link SearcherIterator}
+ * according achieved results. Implements {@link SearcherIterator}
  */
 class TargetPlaceSearcher implements SearcherIterator {
     private URLBuilder urlBuilder
@@ -37,7 +36,8 @@ class TargetPlaceSearcher implements SearcherIterator {
         this.httpClient = httpClient
         this.responseParser = responseParser
 
-        searchCalc = new SearchCalculator(config.maxIterationNumber, config.searchRadius, config.searchRate)
+        searchCalc = new SearchCalculator(config.maxIterationNumber, config.possibleLocationsNumber,
+                config.searchRadius, config.searchRate)
         initialLat = config.initialLatitude
         initialLng = config.initialLongitude
         excludedTypes = config.excludedTypes
