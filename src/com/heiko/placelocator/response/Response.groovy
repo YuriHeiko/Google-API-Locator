@@ -9,7 +9,7 @@ class Response {
     private String status
     private Places places
     private String description
-    private final int GPS_ERROR = 14
+    private final int GPS_ERROR
 
     /**
      * Constructs the object in case of some error occurred
@@ -20,6 +20,7 @@ class Response {
     Response(String status, String description) {
         this.status = status
         this.description = description
+        GPS_ERROR = 0
     }
 
     /**
@@ -32,7 +33,8 @@ class Response {
      * the initial location
      * @param maxLocationNumber the maximum number of the closest locations
      */
-    Response(Places places, int maxLocationNumber) {
+    Response(Places places, int maxLocationNumber, int gpsError) {
+        this.GPS_ERROR = gpsError
 
         if (places.getSize() > 0) {
             status = 'OK'

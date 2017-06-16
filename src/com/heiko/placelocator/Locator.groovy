@@ -32,7 +32,7 @@ try {
     config.merge(CommandLineParser.parse(args) as ConfigObject)
 
     // Get responseParser according to configuration parameters
-    final ResponseParser responseParser = new ParserFactory().create(config.inputDataFormat as String)
+    final ResponseParser responseParser = new ParserFactory().create(config.outputDataFormat as String)
 
     // Get HTTPClient
     final HTTPClient httpClient = new HTTPClientFactory().create(config.HTTPClientType as String)
@@ -49,7 +49,7 @@ try {
         places = iterator.doSearch()
     }
 
-    new Response(places, config.maxLocationNumber)
+    new Response(places, config.maxLocationNumber, config.gpsError)
 
 } catch (GoogleAPILocatorException e) {
     new Response(e.errorCode, e.getMessage())

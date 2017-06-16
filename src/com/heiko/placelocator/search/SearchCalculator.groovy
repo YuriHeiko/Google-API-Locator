@@ -3,7 +3,7 @@ package com.heiko.placelocator.search
 import com.heiko.placelocator.location.Places
 
 /**
- * Contains {@link TargetPlaceSearcher} algorithm logic
+ * Contains the {@link TargetPlaceSearcher} algorithm logic
  */
 class SearchCalculator {
     private int maxIterationsCounter
@@ -52,7 +52,8 @@ class SearchCalculator {
     /**
      * Checks if found locations are the closest or it was the last search iteration.
      * <p><ul>
-     *     <li>If there are no locations found, sets the positive search tendency returns false.
+     *     <li>If there are no locations found, sets the positive search tendency and
+     *     returns false.
      *     <li>If it is not the first search iteration and it is found more then
      *     possibleLocationsNumber, sets the negative search tendency and returns false.
      *     <li>Returns true, in the other cases.

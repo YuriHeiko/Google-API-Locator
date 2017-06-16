@@ -59,8 +59,9 @@ class TargetPlaceSearcher implements SearcherIterator {
     /**
      * Uses {@code URLBuilder}, {@code HTTPClient}, {@code ResponseParser}
      * objects to make a HTTP request to Google Place Web API and parse a
-     * response. Checks the obtained result and sets the isSearchFinished
-     * flag and new radius. Returns the result.
+     * response. Uses {@code SearchCalculator} to check the obtained result,
+     * calculate and set the new radius, set the isSearchFinished flag.
+     * Returns the result.
      *
      * @return a {@link Places} object with found closest locations
      * @throws SearchWasFinishedException if the result was achieved

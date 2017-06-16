@@ -8,11 +8,12 @@ possibleLocationsNumber = 10
 maxIterationNumber = 4
 searchRadius = 14
 searchRate = 6
+gpsError = 14
 
 // API configuration
-inputDataFormat = 'json'
+outputDataFormat = 'json'
 authorizationKey = 'AIzaSyBCdeSMg1PnVaAOaEVrB_GIog-q6fs27Fw'
-urlPrefix = "https://maps.googleapis.com/maps/api/place/nearbysearch/$inputDataFormat?"
+urlPrefix = "https://maps.googleapis.com/maps/api/place/nearbysearch/$outputDataFormat?"
 urlOptions = [key: authorizationKey, radius: searchRadius]
 
 // filter

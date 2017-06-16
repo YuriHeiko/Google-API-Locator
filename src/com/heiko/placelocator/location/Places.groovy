@@ -16,7 +16,7 @@ class Places {
      * @param initialLat the initial latitude
      * @param initialLng the initial longitude
      */
-    Places(List<Place> places, List<String> excludedTypes, double initialLat, double initialLng) {
+    Places(List places, List<String> excludedTypes, double initialLat, double initialLng) {
 
         this.places = new ArrayList<>()
 
