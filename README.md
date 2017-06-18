@@ -1,10 +1,15 @@
-**Задание**
+**Task**
 
-Необходимо создать скрипт который будет получать информацию о текущем месте нахождения пользователя (кафе, парк, спортзал и т.д.) по заданным географическим координатам.
+You have to create a script which will receive information about the current 
+user location (a cafe, park, gym etc) using given geographical coordinates.
 
-**Технологии**
+**Technologies**
 
-_Google Places API_ - Для определения списка ближайших мест  
-_Groovy_ - в качестве языка для создания скрипта  
+_Google Places API_ - for getting the list of the nearest places  
+_Groovy_ - as a scripting language
 
-В остальном дается полная совобода в использовании любых доступных библиотек. При выборе следует ориентироваться на получение максимально надежного и простого в реализации и использовании решения. 
+You are free to use any other available libraries. You should focus on obtaining 
+the most reliable and straightforward in an implementation and use solution.
+ 
+<br> 
+<br> 

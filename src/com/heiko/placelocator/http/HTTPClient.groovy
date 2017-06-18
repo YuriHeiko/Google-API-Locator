@@ -9,5 +9,5 @@ interface HTTPClient {
      * @param url url for a get request
      * @return a response
      */
-    def get(String url)
+    String get(String url)
 }

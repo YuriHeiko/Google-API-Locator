@@ -33,7 +33,7 @@ class Response {
      * the initial location
      * @param maxLocationNumber the maximum number of the closest locations
      */
-    Response(Places places, int maxLocationNumber, int gpsError) {
+    Response(final Places places, final int maxLocationNumber, final int gpsError) {
         this.GPS_ERROR = gpsError
 
         if (places.getSize() > 0) {

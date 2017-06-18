@@ -5,8 +5,18 @@ package com.heiko.placelocator.location
  */
 class Places {
     private final List<Place> places
+    private int tendency
 
-    /**
+    int getTendency() {
+        return tendency
+    }
+
+    void setTendency(int tendency) {
+
+        this.tendency = tendency
+    }
+
+/**
      * Constructs this object and fills the List of new Place objects according to incoming
      * arguments. Sort the list according to distance between Place coordinates and the
      * initial point coordinates
