@@ -25,31 +25,21 @@ import com.heiko.placelocator.search.SearcherIterator
  */
 
 try {
-    // Read the initial configuration from the default configuration file
     ConfigObject config = ConfigReader.read(new File('Properties.groovy'))
-
-    // Parse command line arguments and put them into the initial configuration object
     config.merge(CommandLineParser.parse(args) as ConfigObject)
 
-    // Get responseParser according to configuration parameters
     final ResponseParser responseParser = new ParserFactory().create(config.outputDataFormat as String)
-
-    // Get HTTPClient
     final HTTPClient httpClient = new HTTPClientFactory().create(config.HTTPClientType as String)
-
-    // Creates URLBuilder object and initializes it according to configuration parameters
     final URLBuilder urlBuilder = new URLBuilder(config.urlOptions as Map, config.urlPrefix as String)
 
-    // Get Searcher
     final SearcherIterator iterator = new PlaceSearcherFactory().create(responseParser, httpClient, urlBuilder, config)
 
-    // Do search
     Places places
     while (!iterator.isSearchFinished()) {
         places = iterator.doSearch()
     }
 
-    new Response(places, config.maxLocationNumber, config.gpsError)
+    new Response(places, config.maxLocationNumber as int, config.gpsError as int)
 
 } catch (GoogleAPILocatorException e) {
     new Response(e.errorCode, e.getMessage())

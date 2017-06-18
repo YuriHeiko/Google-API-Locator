@@ -36,7 +36,7 @@ class TargetPlaceSearcher implements SearcherIterator {
         this.httpClient = httpClient
         this.responseParser = responseParser
 
-        searchCalc = new SearchCalculator(config.maxIterationNumber, config.possibleLocationsNumber,
+        searchCalc = new SearchCalculator(config.maxIterationsNumber, config.possibleLocationsNumber,
                 config.searchRadius, config.searchRate)
         initialLat = config.initialLatitude
         initialLng = config.initialLongitude
