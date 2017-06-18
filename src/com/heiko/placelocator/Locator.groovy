@@ -10,8 +10,10 @@ import com.heiko.placelocator.location.Places
 import com.heiko.placelocator.parser.ParserFactory
 import com.heiko.placelocator.parser.ResponseParser
 import com.heiko.placelocator.response.Response
+import com.heiko.placelocator.search.Impl.TargetSearchHistory
 import com.heiko.placelocator.search.PlaceSearcherFactory
-import com.heiko.placelocator.search.SearcherIterator
+import com.heiko.placelocator.search.SearchHistory
+import com.heiko.placelocator.search.SearchProcessor
 
 /**
  * Uses Google Places Web API to find a nearest possible location
@@ -40,16 +42,21 @@ try {
     // Creates URLBuilder object and initializes it according to configuration parameters
     final URLBuilder urlBuilder = new URLBuilder(config.urlOptions as Map, config.urlPrefix as String)
 
-    // Get Searcher
-    final SearcherIterator iterator = new PlaceSearcherFactory().create(responseParser, httpClient, urlBuilder, config)
+    // Get SearchProcessor
+    final SearchProcessor processor = new PlaceSearcherFactory().create(responseParser, httpClient, urlBuilder, config)
+
+    // Get SearchHistory
+    final SearchHistory history = new TargetSearchHistory()
 
     // Do search
     Places places
-    while (!iterator.isSearchFinished()) {
-        places = iterator.doSearch()
+    while (!processor.isSearchFinished(history)) {
+        int radius = processor.getNextFactor(history)
+        List results = responseParser.parse(httpClient.get(urlBuilder.get(radius)) as String).results
+        history.put(new Places(results, config.excludedTypes, config.initialLat, config.initialLng), radius)
     }
 
-    new Response(places, config.maxLocationNumber, config.gpsError)
+    new Response(history.get(Last), config.maxLocationNumber, config.gpsError)
 
 } catch (GoogleAPILocatorException e) {
     new Response(e.errorCode, e.getMessage())

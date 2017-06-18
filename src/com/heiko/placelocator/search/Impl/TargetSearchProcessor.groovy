@@ -1,8 +1,8 @@
-package com.heiko.placelocator.search2.Impl
+package com.heiko.placelocator.search.Impl
 
 import com.heiko.placelocator.location.Places
-import com.heiko.placelocator.search2.SearchHistory
-import com.heiko.placelocator.search2.SearchProcessor
+import com.heiko.placelocator.search.SearchHistory
+import com.heiko.placelocator.search.SearchProcessor
 
 class TargetSearchProcessor implements SearchProcessor<SearchHistory<Places, Integer>> {
     private int iterationsCounter

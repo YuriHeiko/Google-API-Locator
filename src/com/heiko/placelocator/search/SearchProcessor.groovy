@@ -1,4 +1,4 @@
-package com.heiko.placelocator.search2
+package com.heiko.placelocator.search
 
 interface SearchProcessor<T> {
     /**
