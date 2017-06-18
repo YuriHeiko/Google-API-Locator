@@ -39,7 +39,7 @@ try {
 
 
     final SearchProcessor processor = new SearcherFactory().create(config)
-    final HistoryHolder<Integer, Places> history = new SearchHistoryLIFO<>()
+    final HistoryHolder<Integer, Places, Integer> history = new SearchHistoryLIFO<>()
 
     while (!processor.isSearchFinished(history)) {
         int searchRadius = processor.getNextFactor(history)
@@ -50,12 +50,13 @@ try {
                                 googleAPI.doGet(urlBuilder.get(searchRadius)),
                                 config.excludedTypes as List,
                                 config.initialLatitude as double,
-                                config.initialLongitude as double))
+                                config.initialLongitude as double),
+                        0)
     }
 
-    Places places = history.getValue(0)
+    Places places = history.getFirstValue(0)
     if (!places.getSize()) {
-        places = history.getValue(1) ?: places
+        places = history.getFirstValue(1) ?: places
     }
 
     new Response(places, config.maxLocationNumber as int, config.gpsError as int)
