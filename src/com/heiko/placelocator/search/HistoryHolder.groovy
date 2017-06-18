@@ -1,6 +1,6 @@
 package com.heiko.placelocator.search
 
-interface SearchHistory<T, U> {
+interface HistoryHolder<T, U> {
 
     void put(T t, U u)
 

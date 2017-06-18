@@ -1,9 +1,9 @@
 package com.heiko.placelocator.search.Impl
 
 import com.heiko.placelocator.location.Places
-import com.heiko.placelocator.search.SearchHistory
+import com.heiko.placelocator.search.HistoryHolder
 
-class TargetSearchHistory implements SearchHistory<Integer, Places> {
+class SearchHistoryLIFO implements HistoryHolder<Integer, Places> {
     private final Map<Integer, Places> map = new LinkedHashMap<>()
 
     @Override

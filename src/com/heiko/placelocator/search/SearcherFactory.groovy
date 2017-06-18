@@ -6,7 +6,7 @@ import com.heiko.placelocator.http.URLBuilder
 import com.heiko.placelocator.parser.ResponseParser
 import com.heiko.placelocator.search.Impl.TargetSearchProcessor
 
-class PlaceSearcherFactory {
+class SearcherFactory {
 
     /**
      * Creates the default search algorithm implementation
