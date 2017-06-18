@@ -18,7 +18,7 @@ class SearchHistoryLIFO implements HistoryHolder<Integer, Places, Integer> {
 
     @Override
     Places getFirstValue(int index) {
-        map.values()[-(++index)][0]
+        !map.keySet()[-(++index)] ? null : map.values()[-(++index)][0]
     }
 
     @Override
