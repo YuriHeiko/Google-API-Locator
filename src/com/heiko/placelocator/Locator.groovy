@@ -1,6 +1,8 @@
 package com.heiko.placelocator
 
 import com.heiko.placelocator.exceptions.GoogleAPILocatorException
+import com.heiko.placelocator.google.GoogleAPI
+import com.heiko.placelocator.google.GooglePlacesWebAPI
 import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.HTTPClientFactory
 import com.heiko.placelocator.http.URLBuilder
@@ -10,7 +12,7 @@ import com.heiko.placelocator.location.Places
 import com.heiko.placelocator.parser.ParserFactory
 import com.heiko.placelocator.parser.ResponseParser
 import com.heiko.placelocator.response.Response
-import com.heiko.placelocator.search.PlaceSearcherFactory
+import com.heiko.placelocator.search.SearcherFactory
 import com.heiko.placelocator.search.SearcherIterator
 
 /**
@@ -30,9 +32,10 @@ try {
 
     final ResponseParser responseParser = new ParserFactory().create(config.outputDataFormat as String)
     final HTTPClient httpClient = new HTTPClientFactory().create(config.HTTPClientType as String)
+    final GoogleAPI googleAPI = new GooglePlacesWebAPI(responseParser, httpClient)
     final URLBuilder urlBuilder = new URLBuilder(config.urlOptions as Map, config.urlPrefix as String)
 
-    final SearcherIterator iterator = new PlaceSearcherFactory().create(responseParser, httpClient, urlBuilder, config)
+    final SearcherIterator iterator = new SearcherFactory().create(googleAPI, urlBuilder, config)
 
     Places places
     while (!iterator.isSearchFinished()) {

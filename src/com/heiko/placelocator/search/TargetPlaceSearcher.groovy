@@ -1,6 +1,7 @@
 package com.heiko.placelocator.search
 
 import com.heiko.placelocator.exceptions.SearchWasFinishedException
+import com.heiko.placelocator.google.GoogleAPI
 import com.heiko.placelocator.http.HTTPClient
 import com.heiko.placelocator.http.URLBuilder
 import com.heiko.placelocator.location.Places
@@ -13,15 +14,15 @@ import com.heiko.placelocator.parser.ResponseParser
  * according achieved results. Implements {@link SearcherIterator}
  */
 class TargetPlaceSearcher implements SearcherIterator {
+    private GoogleAPI googleAPI
     private URLBuilder urlBuilder
-    private HTTPClient httpClient
-    private ResponseParser responseParser
-    private boolean isSearchFinished
+
     private SearchCalculator searchCalc
+    private PlacesHolder placesHolder
+    private List excludedTypes
     private double initialLat
     private double initialLng
-    private List excludedTypes
-    private PlacesHolder placesHolder
+    private boolean isSearchFinished
 
     /**
      * Constructs an object according to received arguments. Sets the initial parameters.
@@ -31,10 +32,9 @@ class TargetPlaceSearcher implements SearcherIterator {
      * @param responseParser an {@link ResponseParser} object
      * @param config an {@link ConfigObject} object contains all initial properties
      */
-    TargetPlaceSearcher(URLBuilder urlBuilder, HTTPClient httpClient, ResponseParser responseParser, ConfigObject config) {
+    TargetPlaceSearcher(GoogleAPI googleAPI, URLBuilder urlBuilder, ConfigObject config) {
+        this.googleAPI = googleAPI
         this.urlBuilder = urlBuilder
-        this.httpClient = httpClient
-        this.responseParser = responseParser
 
         searchCalc = new SearchCalculator(config.maxIterationsNumber, config.possibleLocationsNumber,
                 config.searchRadius, config.searchRate)
@@ -72,7 +72,7 @@ class TargetPlaceSearcher implements SearcherIterator {
             throw new SearchWasFinishedException("Attempt to iterate over a finished search")
         }
 
-        List results = (responseParser.parse(httpClient.get(urlBuilder.get()) as String)).results
+        List results = googleAPI.doGet(urlBuilder.get())
         Places places = new Places(results, excludedTypes, initialLat, initialLng)
         placesHolder.put(places)
         isSearchFinished = searchCalc.check(places)

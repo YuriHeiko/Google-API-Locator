@@ -12,7 +12,7 @@ class SimpleHTTPClient implements HTTPClient {
      * @return a response
      */
     @Override
-    def get(final String url) {
+    String get(final String url) {
         url.toURL().getText() // can throw IOException ??
     }
 }
