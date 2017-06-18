@@ -45,7 +45,7 @@ try {
         int searchRadius = processor.getNextFactor(history)
 
         history.
-                add(searchRadius,
+                put(searchRadius,
                         new Places(
                                 googleAPI.doGet(urlBuilder.get(searchRadius)),
                                 config.excludedTypes as List,

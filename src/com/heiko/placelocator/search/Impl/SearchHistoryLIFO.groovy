@@ -7,18 +7,13 @@ class SearchHistoryLIFO implements HistoryHolder<Integer, Places> {
     private final Map<Integer, Places> map = new LinkedHashMap<>()
 
     @Override
-    void add(Integer radius, Places places) {
-        map.put(radius, places)
-    }
-
-    @Override
     Integer getKey(int index) {
         map.keySet()[-(++index)]
     }
 
     @Override
     Places getValue(int index) {
-        map.get(map.keySet()[-(++index)])
+        map.values()[-(++index)]
     }
 
     @Override
