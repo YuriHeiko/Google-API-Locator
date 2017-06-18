@@ -54,8 +54,8 @@ try {
     }
 
     Places places = history.getValue(0)
-    if (!places.getSize()) {
-        places = history.getValue(1) ?: places
+    if (!places.getSize() && history.getValue(1)) {
+        places = history.getValue(1)
     }
 
     new Response(places, config.maxLocationNumber as int, config.gpsError as int)
